@@ -6,7 +6,7 @@ from recurrent import LstmAutoEncoder
 
 def main():
     data_dir_path = './data'
-    model_dir_path = './models'
+    model_dir_path = './model'
     ecg_data = pd.read_csv(data_dir_path + '/ecg_discord_test.csv', header=None)
     print(ecg_data.head())
     ecg_np_data = ecg_data.as_matrix()
