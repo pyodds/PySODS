@@ -1,5 +1,3 @@
-
-
 from sklearn.ensemble.iforest import IsolationForest
 
 class iForest(IsolationForest):
