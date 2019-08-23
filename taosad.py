@@ -4,7 +4,10 @@ import datetime
 import random
 import numpy
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
+
 
 
 from algo.iForest import iForest
@@ -147,9 +150,23 @@ except Exception as err:
     conn.close()
     raise (err)
 
-#Use iterator to go through the retreived data
-for col in c1:
-    print(col)
+# #Use iterator to go through the retreived data
+# for col in c1:
+#     print(col)
+#
+
+
+
+a = pd.DataFrame(list(data))
+X = a.iloc[:,1:]
+
+
+
+
+clf = iForest(behaviour='new', max_samples='auto',
+                      random_state=rng, contamination='auto')
+clf.fit(X)
+y_pred_train = clf.predict(X)
 
 
 
@@ -157,6 +174,7 @@ n_outliers = 20
 ground_truth = np.ones(420, dtype=int)
 ground_truth[-n_outliers:] = -1
 
+print (accuracy_score(ground_truth, y_pred_train))
 c1.execute('DROP TABLE t')
 
 conn.close()
