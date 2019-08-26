@@ -6,7 +6,8 @@ import taos
 import pandas as pd
 from algo.iForest import iForest
 from algo.ocsvm import ocsvm
-
+from algo.lof import LOF
+from algo.robustcovariance import robustcovariance
 MAX_INT = np.iinfo(np.int32).max
 MIN_INT = -1 * MAX_INT
 
@@ -153,13 +154,14 @@ def query_data(conn,cursor,database,table,time_serie):
         X = a.iloc[:, 1:]
     return X
 
-def output_performance(algorithm,ground_truth,y_pred):
+def output_performance(algorithm,ground_truth,y_pred,time):
     print ('='*30)
     print ('Results in Algorithm %s are:' %algorithm)
     print ('accuracy_score: %.2f' %accuracy_score(ground_truth, y_pred))
     print ('precision_score: %.2f' %precision_score(ground_truth, y_pred))
     print ('recall_score: %.2f' %recall_score(ground_truth, y_pred))
     print ('f1_score: %.2f' %f1_score(ground_truth, y_pred))
+    print ('processing time: %.6f seconds' %time)
     print('=' * 30)
 
 def insert_data(conn,consur,database,table):
@@ -297,6 +299,7 @@ def query_data(conn,cursor,database,table,time_serie):
     return X
 
 def algorithm_selection(algorithm,random_state):
-    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),'ocsvm':ocsvm(gamma='auto')}
+    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),'ocsvm':ocsvm(gamma='auto'),'lof': LOF(contamination=0.1,novelty=True),
+                   'robustcovariance':robustcovariance(random_state=random_state)}
     alg = algorithm_dic[algorithm]
     return alg
