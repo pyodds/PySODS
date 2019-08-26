@@ -4,6 +4,8 @@ from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 import datetime
 import taos
 import pandas as pd
+from algo.iForest import iForest
+from algo.ocsvm import ocsvm
 
 MAX_INT = np.iinfo(np.int32).max
 MIN_INT = -1 * MAX_INT
@@ -293,3 +295,8 @@ def query_data(conn,cursor,database,table,time_serie):
     else:
         X = a.iloc[:, 1:]
     return X
+
+def algorithm_selection(algorithm,random_state):
+    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),'ocsvm':ocsvm(gamma='auto')}
+    alg = algorithm_dic[algorithm]
+    return alg

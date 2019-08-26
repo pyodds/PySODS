@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import argparse
 
-from utils.utils import output_performance,insert_data,connect_server,query_data
+from utils.utils import output_performance,insert_data,connect_server,query_data,algorithm_selection
 
 
 from algo.iForest import iForest
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
     parser.add_argument('--time_serie',default=False)
-    parser.add_argument('--algorithm',default='iforest',choices=['iforest','lof'])
+    parser.add_argument('--algorithm',default='ocsvm',choices=['iforest','lof','ocsvm'])
     args = parser.parse_args()
 
     #random seed setting
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     data = query_data(conn,cursor,args.database,args.table,args.time_serie)
 
     #algorithm
-    clf = iForest(behaviour='new', max_samples='auto',random_state=rng, contamination='auto')
+    clf = algorithm_selection(args.algorithm,random_state=rng)
     clf.fit(data)
     prediction_result = clf.predict(data)
 
