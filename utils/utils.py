@@ -1,94 +1,295 @@
 import numpy as np
 import numbers
+from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
+import datetime
+import taos
+import pandas as pd
 
 MAX_INT = np.iinfo(np.int32).max
 MIN_INT = -1 * MAX_INT
 
+def output_performance(algorithm,ground_truth,y_pred):
+    print ('='*30)
+    print ('Results in Algorithm %s are:' %algorithm)
+    print ('accuracy_score: %.2f' %accuracy_score(ground_truth, y_pred))
+    print ('precision_score: %.2f' %precision_score(ground_truth, y_pred))
+    print ('recall_score: %.2f' %recall_score(ground_truth, y_pred))
+    print ('f1_score: %.2f' %f1_score(ground_truth, y_pred))
+    print('=' * 30)
 
-def check_parameter(param, low=MIN_INT, high=MAX_INT, param_name='',
-                    include_left=False, include_right=False):
-    """Check if an input is within the defined range.
-    Parameters
-    ----------
-    param : int, float
-        The input parameter to check.
-    low : int, float
-        The lower bound of the range.
-    high : int, float
-        The higher bound of the range.
-    param_name : str, optional (default='')
-        The name of the parameter.
-    include_left : bool, optional (default=False)
-        Whether includes the lower bound (lower bound <=).
-    include_right : bool, optional (default=False)
-        Whether includes the higher bound (<= higher bound).
-    Returns
-    -------
-    within_range : bool or raise errors
-        Whether the parameter is within the range of (low, high)
-    """
+def insert_data(conn,consur,database,table):
 
-    # param, low and high should all be numerical
-    if not isinstance(param, (numbers.Integral, np.integer, np.float)):
-        raise TypeError('{param_name} is set to {param} Not numerical'.format(
-            param=param, param_name=param_name))
 
-    if not isinstance(low, (numbers.Integral, np.integer, np.float)):
-        raise TypeError('low is set to {low}. Not numerical'.format(low=low))
+    # Create a database named db
+    try:
+        consur.execute('drop database if exists %s' %database)
+        consur.execute('create database if not exists %s' %database)
+    except Exception as err:
+        conn.close()
+        raise (err)
 
-    if not isinstance(high, (numbers.Integral, np.integer, np.float)):
-        raise TypeError('high is set to {high}. Not numerical'.format(
-            high=high))
+    # use database
+    try:
+        consur.execute('use %s' %database)
+    except Exception as err:
+        conn.close()
+        raise (err)
 
-    # at least one of the bounds should be specified
-    if low is MIN_INT and high is MAX_INT:
-        raise ValueError('Neither low nor high bounds is undefined')
+    # create table
+    try:
+        consur.execute('create table if not exists %s (ts timestamp, a float, b float)' %table)
+    except Exception as err:
+        conn.close()
+        raise (err)
 
-    # if wrong bound values are used
-    if low > high:
-        raise ValueError(
-            'Lower bound > Higher bound')
+    start_time = datetime.datetime(2019, 8, 1)
+    time_interval = datetime.timedelta(seconds=60)
 
-    # value check under different bound conditions
-    if (include_left and include_right) and (param < low or param > high):
-        raise ValueError(
-            '{param_name} is set to {param}. '
-            'Not in the range of [{low}, {high}].'.format(
-                param=param, low=low, high=high, param_name=param_name))
+    # insert data
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.3 * np.random.randn(1)-2, 0.3 * np.random.randn(1)-2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
 
-    elif (include_left and not include_right) and (
-            param < low or param >= high):
-        raise ValueError(
-            '{param_name} is set to {param}. '
-            'Not in the range of [{low}, {high}).'.format(
-                param=param, low=low, high=high, param_name=param_name))
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table, start_time, 0.3 * np.random.randn(1)+2, 0.3 * np.random.randn(1)+2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
 
-    elif (not include_left and include_right) and (
-            param <= low or param > high):
-        raise ValueError(
-            '{param_name} is set to {param}. '
-            'Not in the range of ({low}, {high}].'.format(
-                param=param, low=low, high=high, param_name=param_name))
+    for i in range(20):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time,np.random.uniform(low=-4, high=4), np.random.uniform(low=-4, high=4)))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
 
-    elif (not include_left and not include_right) and (
-            param <= low or param >= high):
-        raise ValueError(
-            '{param_name} is set to {param}. '
-            'Not in the range of ({low}, {high}).'.format(
-                param=param, low=low, high=high, param_name=param_name))
+    start_time = datetime.datetime(2019, 9, 1)
+    time_interval = datetime.timedelta(seconds=60)
+
+    # insert data
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.1 * np.random.randn(1)-2, 0.1 * np.random.randn(1)-2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.1 * np.random.randn(1)+2, 0.1 * np.random.randn(1)+2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(20):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table, start_time,np.random.uniform(low=-4, high=4), np.random.uniform(low=-4, high=4)))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    n_outliers = 20
+    ground_truth = np.ones(840, dtype=int)
+    ground_truth[-n_outliers:] = -1
+    ground_truth[400:420] = -1
+
+    return ground_truth
+
+def connect_server(host,user,password):
+    # Connect to TDengine server.
+    #
+    # parameters:
+    # @host     : TDengine server IP address
+    # @user     : Username used to connect to TDengine server
+    # @password : Password
+    # @database : Database to use when connecting to TDengine server
+    # @config   : Configuration directory
+    conn = taos.connect(host,user,password,config="/etc/taos")
+    cursor = conn.cursor()
+    return conn,cursor
+
+def query_data(conn,cursor,database,table,time_serie):
+
+    # query data and return data in the form of list
+    try:
+        cursor.execute('select * from %s.%s' %(database,table))
+    except Exception as err:
+        conn.close()
+        raise (err)
+
+    # Column names are in c1.description list
+    cols = cursor.description
+    # Use fetchall to fetch data in a list
+    data = cursor.fetchall()
+
+    try:
+        cursor.execute('select * from %s.%s' %(database,table))
+    except Exception as err:
+        conn.close()
+        raise (err)
+
+    a = pd.DataFrame(list(data))
+    if time_serie:
+        X = a
     else:
-        return True
+        X = a.iloc[:, 1:]
+    return X
+
+def output_performance(algorithm,ground_truth,y_pred):
+    print ('='*30)
+    print ('Results in Algorithm %s are:' %algorithm)
+    print ('accuracy_score: %.2f' %accuracy_score(ground_truth, y_pred))
+    print ('precision_score: %.2f' %precision_score(ground_truth, y_pred))
+    print ('recall_score: %.2f' %recall_score(ground_truth, y_pred))
+    print ('f1_score: %.2f' %f1_score(ground_truth, y_pred))
+    print('=' * 30)
+
+def insert_data(conn,consur,database,table):
 
 
-def check_detector(detector):
-    """Checks if fit and decision_function methods exist for given detector
-    Parameters
-    ----------
-    detector : pyod.models
-        Detector instance for which the check is performed.
-    """
+    # Create a database named db
+    try:
+        consur.execute('drop database if exists %s' %database)
+        consur.execute('create database if not exists %s' %database)
+    except Exception as err:
+        conn.close()
+        raise (err)
 
-    if not hasattr(detector, 'fit') or not hasattr(detector,
-                                                   'decision_function'):
-        raise AttributeError("%s is not a detector instance." % (detector))
+    # use database
+    try:
+        consur.execute('use %s' %database)
+    except Exception as err:
+        conn.close()
+        raise (err)
 
+    # create table
+    try:
+        consur.execute('create table if not exists %s (ts timestamp, a float, b float)' %table)
+    except Exception as err:
+        conn.close()
+        raise (err)
+
+    start_time = datetime.datetime(2019, 8, 1)
+    time_interval = datetime.timedelta(seconds=60)
+
+    # insert data
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.3 * np.random.randn(1)-2, 0.3 * np.random.randn(1)-2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table, start_time, 0.3 * np.random.randn(1)+2, 0.3 * np.random.randn(1)+2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(20):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time,np.random.uniform(low=-4, high=4), np.random.uniform(low=-4, high=4)))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    start_time = datetime.datetime(2019, 9, 1)
+    time_interval = datetime.timedelta(seconds=60)
+
+    # insert data
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.1 * np.random.randn(1)-2, 0.1 * np.random.randn(1)-2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(200):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table,start_time, 0.1 * np.random.randn(1)+2, 0.1 * np.random.randn(1)+2))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    for i in range(20):
+        try:
+            consur.execute("insert into %s values ('%s', %f, %f,)" % (
+            table, start_time,np.random.uniform(low=-4, high=4), np.random.uniform(low=-4, high=4)))
+        except Exception as err:
+            conn.close()
+            raise (err)
+        start_time += time_interval
+
+    n_outliers = 20
+    ground_truth = np.ones(840, dtype=int)
+    ground_truth[-n_outliers:] = -1
+    ground_truth[400:420] = -1
+
+    return ground_truth
+
+def connect_server(host,user,password):
+    # Connect to TDengine server.
+    #
+    # parameters:
+    # @host     : TDengine server IP address
+    # @user     : Username used to connect to TDengine server
+    # @password : Password
+    # @database : Database to use when connecting to TDengine server
+    # @config   : Configuration directory
+    conn = taos.connect(host,user,password,config="/etc/taos")
+    cursor = conn.cursor()
+    return conn,cursor
+
+def query_data(conn,cursor,database,table,time_serie):
+
+    # query data and return data in the form of list
+    try:
+        cursor.execute('select * from %s.%s' %(database,table))
+    except Exception as err:
+        conn.close()
+        raise (err)
+
+    # Column names are in c1.description list
+    cols = cursor.description
+    # Use fetchall to fetch data in a list
+    data = cursor.fetchall()
+
+    try:
+        cursor.execute('select * from %s.%s' %(database,table))
+    except Exception as err:
+        conn.close()
+        raise (err)
+
+    a = pd.DataFrame(list(data))
+    if time_serie:
+        X = a
+    else:
+        X = a.iloc[:, 1:]
+    return X
