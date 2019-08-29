@@ -1,6 +1,7 @@
 
 class Base(object):
     def __init__(self):
+        pass
 
 
     def fit(self, X, y=None):
@@ -14,7 +15,6 @@ class Base(object):
         """
         pass
 
-    @abc.abstractmethod
     def predict(self, X):
         """Predict raw anomaly scores of X using the fitted detector.
         The anomaly score of an input sample is computed based on the fitted

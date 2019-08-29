@@ -10,8 +10,6 @@ import getpass
 from utils.utils import output_performance,insert_data,connect_server,query_data,algorithm_selection
 
 
-from algo.iForest import iForest
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="Anomaly Detection Platform Settings")
@@ -22,7 +20,8 @@ if __name__ == '__main__':
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
     parser.add_argument('--time_serie',default=False)
-    parser.add_argument('--algorithm',default='robustcovariance',choices=['iforest','lof','ocsvm','robustcovariance'])
+    parser.add_argument('--algorithm',default='pca',choices=['iforest','lof','ocsvm','robustcovariance','robustautoencoder','luminol','cblof','knn','hbos','sod','pca'])
+    parser.add_argument('--contamination',default=0.05)
     args = parser.parse_args()
 
     #random seed setting
@@ -43,7 +42,7 @@ if __name__ == '__main__':
     print('Load data successful')
 
     #algorithm
-    clf = algorithm_selection(args.algorithm,random_state=rng)
+    clf = algorithm_selection(args.algorithm,random_state=rng,contamination=args.contamination)
     print('Start processing:')
     start_time = time.clock()
     clf.fit(data)

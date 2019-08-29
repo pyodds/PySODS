@@ -8,8 +8,13 @@ from algo.iForest import iForest
 from algo.ocsvm import ocsvm
 from algo.lof import LOF
 from algo.robustcovariance import robustcovariance
-MAX_INT = np.iinfo(np.int32).max
-MIN_INT = -1 * MAX_INT
+from algo.AutoEncoder import AutoEncoder
+from algo.Luminol import LuminolDetec
+from algo.cblof import CBLOF
+from algo.knn import KNN
+from algo.hbos import HBOS
+from algo.sod import SOD
+from algo.pca import PCA
 
 def output_performance(algorithm,ground_truth,y_pred):
     print ('='*30)
@@ -298,8 +303,20 @@ def query_data(conn,cursor,database,table,time_serie):
         X = a.iloc[:, 1:]
     return X
 
-def algorithm_selection(algorithm,random_state):
-    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),'ocsvm':ocsvm(gamma='auto'),'lof': LOF(contamination=0.1,novelty=True),
-                   'robustcovariance':robustcovariance(random_state=random_state)}
+def algorithm_selection(algorithm,random_state,contamination):
+    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),
+                   'ocsvm':ocsvm(gamma='auto'),
+                   'lof': LOF(contamination=contamination,novelty=True),
+                   'robustcovariance':robustcovariance(random_state=random_state),
+                   'robustautoencoder':AutoEncoder(contamination=contamination),
+                   'luminol':LuminolDetec(contamination=contamination),
+                   'cblof':CBLOF(contamination=contamination),
+                   'knn':KNN(contamination=contamination),
+                   'hbos':HBOS(contamination=contamination),
+                   'sod':SOD(contamination=contamination),
+                   'pca':PCA(contamination=contamination)}
     alg = algorithm_dic[algorithm]
     return alg
+
+
+
