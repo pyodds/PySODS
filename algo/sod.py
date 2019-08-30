@@ -90,14 +90,16 @@ class SOD(Base):
         return self
 
     def predict(self, X):
-        X = X.to_numpy()
         anomalies =self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (anomalies>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1
         return ranking
+
+
 
     def decision_function(self, X):
         """Predict raw anomaly score of X using the fitted detector.
@@ -114,6 +116,7 @@ class SOD(Base):
         anomaly_scores : numpy array of shape (n_samples,)
             The anomaly score of the input samples.
         """
+        X = X.to_numpy()
         return self._sod(X)
 
     def _snn(self, X):

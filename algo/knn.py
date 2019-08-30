@@ -203,6 +203,7 @@ class KNN(Base):
         anomaly_scores : numpy array of shape (n_samples,)
             The anomaly score of the input samples.
         """
+        X = X.to_numpy()
         check_is_fitted(self, ['tree_', 'decision_scores_',
                                'threshold_', 'labels_'])
 
@@ -226,10 +227,11 @@ class KNN(Base):
         return pred_scores.ravel()
 
     def predict(self,X):
-        X = X.to_numpy()
+
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (anomalies>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1

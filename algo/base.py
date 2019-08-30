@@ -1,6 +1,8 @@
+from sklearn.manifold import TSNE
 
 class Base(object):
     def __init__(self):
+        self.threshold=None
         pass
 
 
@@ -31,3 +33,8 @@ class Base(object):
             The anomaly score of the input samples.
         """
         pass
+
+    def decision_function(self,X):
+
+        pass
+

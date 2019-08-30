@@ -100,10 +100,10 @@ class CBLOF(Base):
         return self
 
     def predict(self, X):
-        X=X.to_numpy()
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (anomalies>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1
@@ -124,7 +124,7 @@ class CBLOF(Base):
         anomaly_scores : numpy array of shape (n_samples,)
             The anomaly score of the input samples.
         """
-
+        X=X.to_numpy()
         labels = self.clustering_estimator_.predict(X)
         return self._decision_function(X, labels)
     def _set_cluster_centers(self, X, n_features):

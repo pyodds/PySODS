@@ -57,10 +57,15 @@ class AutoEncoder(Base):
         reconstruct_error= (np.square(self.model.predict(X)-X)).mean(axis=1)
         ranking = np.sort(reconstruct_error)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (reconstruct_error>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1
         return ranking
+
+    def decision_function(self,X):
+        reconstruct_error= (np.square(self.model.predict(X)-X)).mean(axis=1)
+        return reconstruct_error
 
 def l21shrink(epsilon,x):
 

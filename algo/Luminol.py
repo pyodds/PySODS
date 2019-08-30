@@ -22,19 +22,25 @@ class LuminolDetec(Base):
         lts = TimeSeries(ts.to_dict())
         # conv_timestamp= np.datetime_as_string(timestamp,unit='s')
         # timeserie = dict(zip(conv_timestamp, ts[:,1:]))
+        self.ts=timestamp
+        self.ts_value=value
         self.detector = anomaly_detector.AnomalyDetector(lts)
 
         return self
 
     def predict(self,ts):
         anomalies = np.reshape(self.detector.get_all_scores().values,-1)
+        self.decision=anomalies
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (anomalies>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1
         return ranking
 
+    def decision_function(self,ts):
+        return self.decision
 
 
 

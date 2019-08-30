@@ -158,6 +158,7 @@ class HBOS(Base):
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
+        self.threshold = threshold
         mask = (anomalies>=threshold)
         ranking[mask]=-1
         ranking[np.logical_not(mask)]=1
