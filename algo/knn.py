@@ -151,6 +151,7 @@ class KNN(Base):
                                        metric_params=self.metric_params,
                                        n_jobs=self.n_jobs,
                                        **kwargs)
+        self.threshold = None
 
     def fit(self, X, y=None):
         """Fit detector. y is optional for unsupervised methods.

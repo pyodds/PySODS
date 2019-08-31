@@ -63,6 +63,7 @@ class HBOS(Base):
         self.alpha = alpha
         self.tol = tol
         self.contamination=contamination
+        self.threshold = None
 
         check_parameter(alpha, 0, 1, param_name='alpha')
         check_parameter(tol, 0, 1, param_name='tol')

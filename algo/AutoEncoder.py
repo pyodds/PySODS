@@ -16,6 +16,7 @@ class AutoEncoder(Base):
         self.kernel_regularizer=kernel_regularizer
         self.loss_function=loss_function
         self.optimizer=optimizer
+        self.threshold = None
 
         if self.hidden_neurons and  self.hidden_neurons != self.hidden_neurons[::-1]:
             print(self.hidden_neurons)

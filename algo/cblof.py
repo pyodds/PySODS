@@ -21,6 +21,8 @@ class CBLOF(Base):
         self.random_state = random_state
         self.n_jobs = n_jobs
         self.contamination=contamination
+        self.threshold = None
+
     # noinspection PyIncorrectDocstring
     def fit(self, X,y=None):
         """Fit detector. y is optional for unsupervised methods.
