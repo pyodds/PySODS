@@ -258,16 +258,16 @@ def query_data(conn,cursor,database,table,time_serie,start_time,end_time,ground_
     return X,new_ground_truth
 
 def algorithm_selection(algorithm,random_state,contamination):
-    algorithm_dic={'iforest':iForest(behaviour='new', max_samples='auto', random_state=random_state, contamination='auto'),
-                   'ocsvm':ocsvm(gamma='auto'),
-                   'lof': LOF(contamination=contamination,novelty=True),
-                   'robustcovariance':robustcovariance(random_state=random_state),
-                   'robustautoencoder':AutoEncoder(contamination=contamination),
+    algorithm_dic={'iforest':iForest(contamination=contamination,n_estimators=100,max_samples="auto", max_features=1.,bootstrap=False,n_jobs=None,behaviour='old',random_state=random_state,verbose=0,warm_start=False),
+                   'ocsvm':ocsvm(contamination=contamination,gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
+                   'lof': LOF(contamination=contamination,n_neighbors=20, algorithm='auto', leaf_size=30,metric='minkowski', p=2, metric_params=None, novelty=False, n_jobs=None),
+                   'robustcovariance':robustcovariance(random_state=random_state,store_precision=True, assume_centered=False,support_fraction=None, contamination=0.1),
+                   'robustautoencoder':AutoEncoder(contamination=contamination,epoch=100,dropout_rate=0.2,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'),
                    'luminol':LuminolDetec(contamination=contamination),
-                   'cblof':CBLOF(contamination=contamination),
-                   'knn':KNN(contamination=contamination),
-                   'hbos':HBOS(contamination=contamination),
-                   'sod':SOD(contamination=contamination),
+                   'cblof':CBLOF(contamination=contamination,n_clusters=8, clustering_estimator=None, alpha=0.9, beta=5,use_weights=False, random_state=random_state,n_jobs=1),
+                   'knn':KNN(contamination=contamination,n_neighbors=5, method='largest',radius=1.0, algorithm='auto', leaf_size=30, metric='minkowski', p=2, metric_params=None, n_jobs=1),
+                   'hbos':HBOS(contamination=contamination, n_bins=10, alpha=0.1, tol=0.5),
+                   'sod':SOD(contamination=contamination,n_neighbors=20, ref_set=10,alpha=0.8),
                    'pca':PCA(contamination=contamination)}
     alg = algorithm_dic[algorithm]
     return alg
