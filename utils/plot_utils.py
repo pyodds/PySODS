@@ -6,7 +6,8 @@ import numpy as np
 sns.set(style="ticks")
 
 
-def visualize_distribution_static(X):
+def visualize_distribution(X,prediction,score):
+    sns.set(style="ticks")
     X=X.to_numpy()
     X_embedding = TSNE(n_components=2).fit_transform(X)
     # fig, ax = plt.subplots(1, 2, figsize=(15, 15), dpi=300,sharey=True)
@@ -15,11 +16,32 @@ def visualize_distribution_static(X):
     # plt.figure(2)
     sns_plot=sns.jointplot(X_embedding[:,0], X_embedding[:,1], kind="kde", space=0, color="#4CB391")
     sns_plot.savefig('./output/img/distribution.png')
-    plt.show()
+
+
+def visualize_distribution_static(X,prediction,score):
+    sns.set(style="darkgrid")
+
+    X=X.to_numpy()
+    X_embedding = TSNE(n_components=2).fit_transform(X)
+
+    outlier_label=[]
+    for i in range(len(X_embedding)):
+        if prediction[i]==1:
+            outlier_label.append('inlier')
+        else:
+            outlier_label.append('outlier')
+    X_outlier = pd.DataFrame({'x_emb':X_embedding[:,0],'y_emb':X_embedding[:,1],'outlier_label':np.array(outlier_label),'score':np.array(score)})
+    # outlier = X_outlier.query("outlier_label == 'outlier'")
+    # inlier = X_outlier.query("outlier_label == 'inlier'")
+
+    new_sns = sns.scatterplot(y="x_emb", x="y_emb",hue = "score", sizes =20, palette = 'BuGn_r',legend = False, data = X_outlier)
+    new_sns.get_figure().savefig('./output/img/distribution_withoutlier.png')
 
 
 
 def visualize_distribution_time_serie(ts,value):
+    sns.set(style="ticks")
+
     ts = pd.DatetimeIndex(ts)
     value=value.to_numpy()[:,1:]
     data = pd.DataFrame(value,ts)
@@ -32,28 +54,35 @@ def visualize_distribution_time_serie(ts,value):
     plt.show()
 
 
+
 def visualize_outlierscore(value,label,contamination):
+    sns.set(style="darkgrid")
+
     ts = np.arange(len(value))
     outlier_label=[]
     for i in range(len(ts)):
         if label[i]==1:
-            outlier_label.append('inliner')
+            outlier_label.append('inlier')
         else:
             outlier_label.append('outlier')
     X_outlier = pd.DataFrame({'ts':ts,'Outlier_score':value,'outlier_label':np.array(outlier_label)})
-    pal = dict(inliner="#4CB391", outlier="gray")
+    pal = dict(inlier="#4CB391", outlier="gray")
     g = sns.FacetGrid(X_outlier, hue="outlier_label", palette=pal, height=5)
     g.map(plt.scatter, "ts", "Outlier_score", s=30, alpha=.7, linewidth=.5, edgecolor="white")
 
     ranking = np.sort(value)
     threshold = ranking[int((1 - contamination) * len(ranking))]
     plt.hlines(threshold, xmin=0, xmax=len(X_outlier)-1, colors="g", zorder=100, label='Threshold')
-    plt.savefig('./output/img/visualize_outlierscore_time.png')
+    threshold = ranking[int((contamination) * len(ranking))]
+    plt.hlines(threshold, xmin=0, xmax=len(X_outlier)-1, colors="g", zorder=100, label='Threshold2')
+    plt.savefig('./output/img/visualize_outlierscore.png')
     plt.show()
+
+
 
 def visualize_outlierresult(X,label):
     X['outlier']=pd.Series(label)
-    pal = dict(inliner="#4CB391", outlier="gray")
+    pal = dict(inlier="#4CB391", outlier="gray")
     g = sns.pairplot(X, hue="outlier", palette=pal)
     plt.show()
 

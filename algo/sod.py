@@ -90,6 +90,7 @@ class SOD(Base):
         return self
 
     def predict(self, X):
+        X=np.array(X)
         anomalies =self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
@@ -116,7 +117,7 @@ class SOD(Base):
         anomaly_scores : numpy array of shape (n_samples,)
             The anomaly score of the input samples.
         """
-        X = X.to_numpy()
+
         return self._sod(X)
 
     def _snn(self, X):
@@ -150,11 +151,12 @@ class SOD(Base):
         anomaly_scores : numpy array of shape (n_samples,)
             The anomaly score of the input samples.
         """
-        ref_inds = self._snn(X)
-        anomaly_scores = np.zeros(shape=(X.shape[0],))
+        X=np.array(X)
 
-        anomaly_scores = np.zeros(shape=(X.shape[0],))
-        for i in range(X.shape[0]):
+        ref_inds = self._snn(X)
+
+        anomaly_scores = np.zeros(shape=(X.shape[0]))
+        for i in range(len(X)):
             obs = X[i]
             ref = X[ref_inds[i,],]
             means = np.mean(ref, axis=0)  # mean of each column

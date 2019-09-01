@@ -259,8 +259,8 @@ def query_data(conn,cursor,database,table,time_serie,start_time,end_time,ground_
 
 def algorithm_selection(algorithm,random_state,contamination):
     algorithm_dic={'iforest':iForest(contamination=contamination,n_estimators=100,max_samples="auto", max_features=1.,bootstrap=False,n_jobs=None,behaviour='old',random_state=random_state,verbose=0,warm_start=False),
-                   'ocsvm':ocsvm(contamination=contamination,gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
-                   'lof': LOF(contamination=contamination,n_neighbors=20, algorithm='auto', leaf_size=30,metric='minkowski', p=2, metric_params=None, novelty=False, n_jobs=None),
+                   'ocsvm':ocsvm(gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
+                   'lof': LOF(contamination=contamination,n_neighbors=20, algorithm='auto', leaf_size=30,metric='minkowski', p=2, metric_params=None, novelty=True, n_jobs=None),
                    'robustcovariance':robustcovariance(random_state=random_state,store_precision=True, assume_centered=False,support_fraction=None, contamination=0.1),
                    'robustautoencoder':AutoEncoder(contamination=contamination,epoch=100,dropout_rate=0.2,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'),
                    'luminol':LuminolDetec(contamination=contamination),

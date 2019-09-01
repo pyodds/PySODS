@@ -7,6 +7,7 @@ from sklearn.utils.validation import check_is_fitted
 from sklearn.utils import column_or_1d
 from .base import Base
 from utils.utilities import check_parameter
+from numpy import percentile
 
 
 class HBOS(Base):
