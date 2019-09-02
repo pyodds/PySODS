@@ -14,7 +14,7 @@ def visualize_distribution(X,prediction,score):
     # plt.figure(1)
     # sns.jointplot(X_embedding[:,0], X_embedding[:,1], kind="hex", color="#4CB391")
     # plt.figure(2)
-    sns_plot=sns.jointplot(X_embedding[:,0], X_embedding[:,1], kind="kde", space=0, color="#4CB391")
+    sns_plot=sns.jointplot(X_embedding[:,1],X_embedding[:,0], kind="kde", space=0, color="#4CB391")
     sns_plot.savefig('./output/img/distribution.png')
 
 
@@ -34,7 +34,7 @@ def visualize_distribution_static(X,prediction,score):
     # outlier = X_outlier.query("outlier_label == 'outlier'")
     # inlier = X_outlier.query("outlier_label == 'inlier'")
 
-    new_sns = sns.scatterplot(y="x_emb", x="y_emb",hue = "score", sizes =20, palette = 'BuGn_r',legend = False, data = X_outlier)
+    new_sns = sns.scatterplot(x="x_emb", y="y_emb",hue = "score", sizes =20, palette = 'BuGn_r',legend = False, data = X_outlier)
     new_sns.get_figure().savefig('./output/img/distribution_withoutlier.png')
 
 

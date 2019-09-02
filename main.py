@@ -25,7 +25,7 @@ if __name__ == '__main__':
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
-    parser.add_argument('--time_serie',default=True)
+    parser.add_argument('--time_serie',default=False)
     parser.add_argument('--visualize_distribution',default=True)
     parser.add_argument('--algorithm',default='luminol',choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
     parser.add_argument('--contamination',default=0.05)
