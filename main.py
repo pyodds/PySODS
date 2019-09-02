@@ -6,12 +6,15 @@ import numpy as np
 import pandas as pd
 import argparse
 import time
+import logging
 import getpass
 from utils.utils import output_performance,insert_demo_data,connect_server,query_data,algorithm_selection
 from utils.plot_utils import visualize_distribution_static,visualize_distribution_time_serie,visualize_outlierscore,visualize_distribution
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.simplefilter("ignore", UserWarning)
+logging.disable(logging.WARNING)
 
 if __name__ == '__main__':
 
@@ -22,9 +25,9 @@ if __name__ == '__main__':
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
-    parser.add_argument('--time_serie',default=False)
+    parser.add_argument('--time_serie',default=True)
     parser.add_argument('--visualize_distribution',default=True)
-    parser.add_argument('--algorithm',default='sod',choices=['iforest','lof','ocsvm','robustcovariance','robustautoencoder','luminol','cblof','knn','hbos','sod','pca'])
+    parser.add_argument('--algorithm',default='luminol',choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
     parser.add_argument('--contamination',default=0.05)
     parser.add_argument('--start_time',default='2019-07-20 00:00:00')
     parser.add_argument('--end_time',default='2019-08-20 00:00:00')

@@ -8,14 +8,18 @@ from algo.iForest import iForest
 from algo.ocsvm import ocsvm
 from algo.lof import LOF
 from algo.robustcovariance import robustcovariance
-from algo.AutoEncoder import AutoEncoder
-from algo.Luminol import LuminolDetec
+from algo.staticautoencoder import StaticAutoEncoder
+from algo.Luminol import LuminolDet
 from algo.cblof import CBLOF
 from algo.knn import KNN
 from algo.hbos import HBOS
 from algo.sod import SOD
 from algo.pca import PCA
 from sklearn.metrics import roc_auc_score
+from algo.dagmm import DAGMM
+from algo.lstm_ad import LSTMAD
+from algo.lstm_enc_dec_axl import LSTMED
+from algo.autoencoder import AutoEncoder
 
 
 def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie):
@@ -255,6 +259,10 @@ def query_data(conn,cursor,database,table,time_serie,start_time,end_time,ground_
     else:
         new_ground_truth=ground_truth
 
+    X.fillna(method='ffill')
+    X.fillna(method='bfill')
+
+
     return X,new_ground_truth
 
 def algorithm_selection(algorithm,random_state,contamination):
@@ -262,13 +270,18 @@ def algorithm_selection(algorithm,random_state,contamination):
                    'ocsvm':ocsvm(gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
                    'lof': LOF(contamination=contamination,n_neighbors=20, algorithm='auto', leaf_size=30,metric='minkowski', p=2, metric_params=None, novelty=True, n_jobs=None),
                    'robustcovariance':robustcovariance(random_state=random_state,store_precision=True, assume_centered=False,support_fraction=None, contamination=0.1),
-                   'robustautoencoder':AutoEncoder(contamination=contamination,epoch=100,dropout_rate=0.2,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'),
-                   'luminol':LuminolDetec(contamination=contamination),
+                   'staticautoencoder':StaticAutoEncoder(contamination=contamination,epoch=100,dropout_rate=0.2,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'),
                    'cblof':CBLOF(contamination=contamination,n_clusters=8, clustering_estimator=None, alpha=0.9, beta=5,use_weights=False, random_state=random_state,n_jobs=1),
                    'knn':KNN(contamination=contamination,n_neighbors=5, method='largest',radius=1.0, algorithm='auto', leaf_size=30, metric='minkowski', p=2, metric_params=None, n_jobs=1),
                    'hbos':HBOS(contamination=contamination, n_bins=10, alpha=0.1, tol=0.5),
                    'sod':SOD(contamination=contamination,n_neighbors=20, ref_set=10,alpha=0.8),
-                   'pca':PCA(contamination=contamination)}
+                   'pca':PCA(contamination=contamination, n_components=None, n_selected_components=None, copy=True, whiten=False, svd_solver='auto',tol=0.0, iterated_power='auto',random_state=random_state,weighted=True, standardization=True),
+                   'dagmm':DAGMM(contamination=contamination,num_epochs=10, lambda_energy=0.1, lambda_cov_diag=0.005, lr=1e-3, batch_size=50, gmm_k=3, normal_percentile=80, sequence_length=30, autoencoder_args=None),
+                   'luminol': LuminolDet(contamination=contamination),
+                   'autoencoder':AutoEncoder(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25),
+                   'lstm_ad':LSTMAD(contamination=contamination,len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1),
+                   'lstm_ed':LSTMED(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25)
+                   }
     alg = algorithm_dic[algorithm]
     return alg
 

@@ -7,7 +7,8 @@ from luminol.modules.time_series import TimeSeries
 from luminol.utils import to_epoch
 import datetime
 from sklearn.decomposition import IncrementalPCA
-class LuminolDetec(Base):
+
+class LuminolDet(Base):
     def __init__(self,contamination=0.1):
         self.contamination=contamination
 

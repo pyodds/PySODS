@@ -5,7 +5,7 @@ import numpy as np
 from sklearn import preprocessing
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-class AutoEncoder(Base):
+class StaticAutoEncoder(Base):
     def __init__(self,hidden_neurons=None,epoch=100,dropout_rate=0.2,contamination=0.1,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'):
         self.hidden_neurons=hidden_neurons
         self.epoch=epoch
