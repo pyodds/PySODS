@@ -6,9 +6,10 @@ from torch.autograd import Variable
 from tqdm import trange
 
 from .algorithm_utils import Algorithm, PyTorchUtils
+from algo.base import Base
 
 
-class LSTMAD(Algorithm, PyTorchUtils):
+class LSTMAD(Base,Algorithm, PyTorchUtils):
     """ LSTM-AD implementation using PyTorch.
     The interface of the class is sklearn-like.
     """

@@ -14,9 +14,10 @@ from tqdm import trange
 from .algorithm_utils import Algorithm, PyTorchUtils
 from .autoencoder import AutoEncoderModule
 from .lstm_enc_dec_axl import LSTMEDModule
+from algo.base import Base
 
 
-class DAGMM(Algorithm, PyTorchUtils):
+class DAGMM(Base,Algorithm, PyTorchUtils):
     class AutoEncoder:
         NN = AutoEncoderModule
         LSTM = LSTMEDModule
