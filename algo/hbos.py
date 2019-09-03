@@ -148,8 +148,6 @@ class HBOS(Base):
         check_is_fitted(self, ['hist_', 'bin_edges_'])
         X = X.to_numpy()
         X = check_array(X)
-
-        # outlier_scores = self._calculate_outlier_scores(X)
         outlier_scores = _calculate_outlier_scores(X, self.bin_edges_,
                                                    self.hist_,
                                                    self.n_bins,

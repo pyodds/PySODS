@@ -1,5 +1,3 @@
-from sklearn.manifold import TSNE
-
 class Base(object):
 
     def __init__(self):

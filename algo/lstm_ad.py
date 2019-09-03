@@ -10,9 +10,7 @@ from algo.base import Base
 
 
 class LSTMAD(Base,Algorithm, PyTorchUtils):
-    """ LSTM-AD implementation using PyTorch.
-    The interface of the class is sklearn-like.
-    """
+
 
     def __init__(self, len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1,
                  seed: int=None, gpu: int=None, details=True,contamination=0.05):
@@ -46,8 +44,6 @@ class LSTMAD(Base,Algorithm, PyTorchUtils):
         input_data_gaussian, target_data_gaussian = self._input_and_target_data_eval(X_train_gaussian)
         predictions_gaussian = self.model(input_data_gaussian)
         errors = self._calc_errors(predictions_gaussian, target_data_gaussian)
-
-        # fit multivariate Gaussian on (validation set) error distribution (via maximum likelihood estimation)
         norm = errors.reshape(errors.shape[0] * errors.shape[1], X.shape[-1] * self.len_out)
         self.mean = np.mean(norm, axis=0)
         self.cov = np.cov(norm.T)

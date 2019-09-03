@@ -9,7 +9,7 @@ SQL-Server Anomaly Detection Service is featured for:
 - **State-of-the-art Anomaly Detection Approaches** including **Statistical/Machine Learning/Deep Learning** models with unified APIs and detailed documentation;
 
 - **Powerful Data Analysis Mechanism** which supports both **static and time-series data** analysis with flexible time-slice(sliding-window) segmentation.  
- 
+
 #### API Demo:
 
 
@@ -153,4 +153,4 @@ The Full API Reference can be found in `website`.
 ## License
 <!-- Biblatex entry: -->
 
-You may use this software under the Apache 2.0 License. 
+You may use this software under the Apache 2.0 License.

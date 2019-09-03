@@ -124,12 +124,10 @@ class AutoEncoder(Base,Algorithm, PyTorchUtils):
 
 class AutoEncoderModule(nn.Module, PyTorchUtils):
     def __init__(self, n_features: int, sequence_length: int, hidden_size: int, seed: int, gpu: int):
-        # Each point is a flattened window and thus has as many features as sequence_length * features
         super().__init__()
         PyTorchUtils.__init__(self, seed, gpu)
         input_length = n_features * sequence_length
 
-        # creates powers of two between eight and the next smaller power from the input_length
         dec_steps = 2 ** np.arange(max(np.ceil(np.log2(hidden_size)), 2), np.log2(input_length))[1:]
         dec_setup = np.concatenate([[hidden_size], dec_steps.repeat(2), [input_length]])
         enc_setup = dec_setup[::-1]

@@ -10,10 +10,6 @@ def visualize_distribution(X,prediction,score):
     sns.set(style="ticks")
     X=X.to_numpy()
     X_embedding = TSNE(n_components=2).fit_transform(X)
-    # fig, ax = plt.subplots(1, 2, figsize=(15, 15), dpi=300,sharey=True)
-    # plt.figure(1)
-    # sns.jointplot(X_embedding[:,0], X_embedding[:,1], kind="hex", color="#4CB391")
-    # plt.figure(2)
     sns_plot=sns.jointplot(X_embedding[:,1],X_embedding[:,0], kind="kde", space=0, color="#4CB391")
     sns_plot.savefig('./output/img/distribution.png')
 
@@ -31,9 +27,6 @@ def visualize_distribution_static(X,prediction,score):
         else:
             outlier_label.append('outlier')
     X_outlier = pd.DataFrame({'x_emb':X_embedding[:,0],'y_emb':X_embedding[:,1],'outlier_label':np.array(outlier_label),'score':np.array(score)})
-    # outlier = X_outlier.query("outlier_label == 'outlier'")
-    # inlier = X_outlier.query("outlier_label == 'inlier'")
-
     new_sns = sns.scatterplot(x="x_emb", y="y_emb",hue = "score", sizes =20, palette = 'BuGn_r',legend = False, data = X_outlier)
     new_sns.get_figure().savefig('./output/img/distribution_withoutlier.png')
 
@@ -45,12 +38,9 @@ def visualize_distribution_time_serie(ts,value):
     ts = pd.DatetimeIndex(ts)
     value=value.to_numpy()[:,1:]
     data = pd.DataFrame(value,ts)
-    # fig, ax = plt.subplots(1, 1, figsize=(15, 15), dpi=300)
     data = data.rolling(2).mean()
     sns_plot=sns.lineplot(data=data, palette="BuGn_r", linewidth=0.5)
     sns_plot.figure.savefig('./output/img/timeserie.png')
-    # ax.set_ylabel('')
-    # ax.set_xlabel('')
     plt.show()
 
 

@@ -6,6 +6,7 @@ import taos
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
+import argparse
 
 from sklearn.utils import check_array
 
@@ -148,7 +149,7 @@ def connect_server(host,user,password):
     cursor = conn.cursor()
     return conn,cursor
 
-def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_serie_name,time_serie=False,ground_truth_flag=True):
+def query_data(conn,cursor,database,table,start_time,end_time,time_serie_name,ground_truth=None,time_serie=False,ground_truth_flag=True):
 
     # query data and return data in the form of list
     if start_time and end_time:
@@ -228,9 +229,6 @@ def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_
                 raise (err)
 
             whole_tmp = pd.DataFrame(list(whole_data))
-
-            # ground_truth_mask= data[:,0]>=args.start_time and np.where(data[:,0]<=args.endtime
-            # ground_truth2=ground_truth[ground_truth_mask]
             timestamp=np.array(whole_tmp.ix[:,0].to_numpy(), dtype='datetime64')
             timestamp=np.reshape(timestamp,-1)
             new_ground_truth=[]
@@ -380,3 +378,10 @@ def standardizer(X, X_t=None, keep_scalar=False):
             return scaler.transform(X), scaler.transform(X_t), scaler
         else:
             return scaler.transform(X), scaler.transform(X_t)
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Unsupported value encountered.')

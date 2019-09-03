@@ -33,22 +33,10 @@ class StaticAutoEncoder(Base):
     def fit(self, X):
         scaler = preprocessing.RobustScaler().fit(X)
         X_train = scaler.transform(X)
-        # self.L = np.random.randn(X.shape[0],X.shape[1])
-        # self.S = np.random.randn(X.shape[0],X.shape[1])
-
-        # np.random.shuffle(X_train)
         if self.hidden_neurons is None:
             self.hidden_neurons=[X_train.shape[1]//2+1,X_train.shape[1]//4+1,X_train.shape[1]//4+1,X_train.shape[1]//2+1]
         self.batch_size=X_train.shape[0]//10
         self.model=self._build_model()
-        # for it in range(1):
-        #     self.L = X_train - self.S
-
-        # self.model.fit(self.L,self.L,epochs=self.epoch,batch_size=self.batch_size)
-
-        # self.L_reconstruct = losses.MSE(self.L,self.model.predict(self.L))
-        # self.L = tf.reduce_mean(tf.square((self.L,self.model.predict(self.L))))
-        # self.S= l21shrink(epsilon=100,x=(X_train-self.L))
 
         self.model.fit(X_train,X_train,epochs=self.epoch,batch_size=self.batch_size)
 

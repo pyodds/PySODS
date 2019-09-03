@@ -34,19 +34,14 @@ class CBLOF(Base):
             The ground truth of the input samples (labels).
         """
         X=X.to_numpy()
-        # validate inputs X and y (optional)
         n_samples, n_features = X.shape
 
-        # check parameters
-        # number of clusters are default to 8
         self._validate_estimator(default=KMeans(
             n_clusters=self.n_clusters,
             random_state=self.random_state,
             n_jobs=self.n_jobs))
 
         self.clustering_estimator_.fit(X=X, y=y)
-        # Get the labels of the clustering results
-        # labels_ is consistent across sklearn clustering algorithms
         self.cluster_labels_ = self.clustering_estimator_.labels_
         self.cluster_sizes_ = np.bincount(self.cluster_labels_)
 
@@ -94,8 +89,6 @@ class CBLOF(Base):
         self.labels_ = (self.decision_scores_ > self.threshold_).astype(
             'int').ravel()
 
-        # calculate for predict_proba()
-
         self._mu = np.mean(self.decision_scores_)
         self._sigma = np.std(self.decision_scores_)
 
@@ -134,8 +127,6 @@ class CBLOF(Base):
         if hasattr(self.clustering_estimator_, 'cluster_centers_'):
             self.cluster_centers_ = self.clustering_estimator_.cluster_centers_
         else:
-            # Set the cluster center as the mean of all the samples within
-            # the cluster
             warnings.warn("The chosen clustering for CBLOF does not have"
                           "the center of clusters. Calculate the center"
                           "as the mean of the clusters.")
@@ -145,14 +136,10 @@ class CBLOF(Base):
                     X[np.where(self.cluster_labels_ == i)], axis=0)
 
     def _set_small_large_clusters(self, n_samples):
-        # Sort the index of clusters by the number of samples belonging to it
         size_clusters = np.bincount(self.cluster_labels_)
 
-        # Sort the order from the largest to the smallest
         sorted_cluster_indices = np.argsort(size_clusters * -1)
 
-        # Initialize the lists of index that fulfill the requirements by
-        # either alpha or beta
         alpha_list = []
         beta_list = []
 
@@ -164,8 +151,6 @@ class CBLOF(Base):
             if size_clusters[sorted_cluster_indices[i - 1]] / size_clusters[
                 sorted_cluster_indices[i]] >= self.beta:
                 beta_list.append(i)
-
-            # Find the separation index fulfills both alpha and beta
         intersection = np.intersect1d(alpha_list, beta_list)
 
         if len(intersection) > 0:
@@ -183,10 +168,6 @@ class CBLOF(Base):
         self.large_cluster_labels_ = sorted_cluster_indices[
                                      0:self._clustering_threshold]
 
-        # No need to calculate small cluster center
-        # self.small_cluster_centers_ = self.cluster_centers_[
-        #     self.small_cluster_labels_]
-
         self._large_cluster_centers = self.cluster_centers_[
             self.large_cluster_labels_]
 
@@ -200,21 +181,18 @@ class CBLOF(Base):
             np.isin(labels, self.large_cluster_labels_))[0]
 
         if small_indices.shape[0] != 0:
-            # Calculate the outlier factor for the samples in small clusters
             dist_to_large_center = cdist(X[small_indices, :],
                                          self._large_cluster_centers)
 
             scores[small_indices] = np.min(dist_to_large_center, axis=1)
 
         if large_indices.shape[0] != 0:
-            # Calculate the outlier factor for the samples in large clusters
             large_centers = self.cluster_centers_[labels[large_indices]]
 
             scores[large_indices] = pairwise_distances_no_broadcast(
                 X[large_indices, :], large_centers)
 
         if self.use_weights:
-            # Weights are calculated as the number of elements in the cluster
             scores = scores * self.cluster_sizes_[labels]
 
         return scores.ravel()

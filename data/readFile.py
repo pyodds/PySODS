@@ -1,7 +1,5 @@
-import taos
 import os
 import os.path
-import numpy as np
 import pandas as pd
 from string import digits
 import argparse

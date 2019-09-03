@@ -158,17 +158,10 @@ class LSTMEDModule(nn.Module, PyTorchUtils):
     def forward(self, ts_batch, return_latent: bool=False):
         batch_size = ts_batch.shape[0]
 
-        # 1. Encode the timeseries to make use of the last hidden state.
         enc_hidden = self._init_hidden(batch_size)  # initialization with zero
         _, enc_hidden = self.encoder(ts_batch.float(), enc_hidden)  # .float() here or .double() for the model
 
-        # 2. Use hidden state as initialization for our Decoder-LSTM
         dec_hidden = enc_hidden
-
-        # 3. Also, use this hidden state to get the first output aka the last point of the reconstructed timeseries
-        # 4. Reconstruct timeseries backwards
-        #    * Use true data for training decoder
-        #    * Use hidden2output for prediction
         output = self.to_var(torch.Tensor(ts_batch.size()).zero_())
         for i in reversed(range(ts_batch.shape[1])):
             output[:, i, :] = self.hidden2output(dec_hidden[0][0, :])

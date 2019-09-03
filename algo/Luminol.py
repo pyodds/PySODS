@@ -21,8 +21,6 @@ class LuminolDet(Base):
         ts = pd.Series(value, index=timestamp)
         ts.index = ts.index.map(lambda d: to_epoch(str(d)))
         lts = TimeSeries(ts.to_dict())
-        # conv_timestamp= np.datetime_as_string(timestamp,unit='s')
-        # timeserie = dict(zip(conv_timestamp, ts[:,1:]))
         self.ts=timestamp
         self.ts_value=value
         self.detector = anomaly_detector.AnomalyDetector(lts)

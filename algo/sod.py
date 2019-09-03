@@ -81,7 +81,6 @@ class SOD(Base):
             The ground truth of the input samples (labels).
         """
 
-        # validate inputs X and y (optional)
         X = X.to_numpy()
         X = check_array(X)
         self.decision_scores_ = self.decision_function(X)

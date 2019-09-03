@@ -1,9 +1,5 @@
-import taos
-import sys
-import random
-import numpy
+
 import numpy as np
-import pandas as pd
 import argparse
 import time
 import logging
@@ -12,6 +8,7 @@ from utils.utilities import output_performance,insert_demo_data,connect_server,q
 from utils.import_algorithm import algorithm_selection
 from utils.plot_utils import visualize_distribution_static,visualize_distribution_time_serie,visualize_outlierscore,visualize_distribution
 import warnings
+from utils.utilities import str2bool
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", UserWarning)
@@ -25,14 +22,14 @@ if __name__ == '__main__':
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
-    parser.add_argument('--time_serie',default=False)
-    parser.add_argument('--visualize_distribution',default=True)
-    parser.add_argument('--algorithm',default='luminol',choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
+    parser.add_argument('--time_serie',const=False,type=str2bool,nargs='?')
+    parser.add_argument('--visualize_distribution',const=True,type=str2bool,nargs='?')
+    parser.add_argument('--algorithm',default='dagmm',choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
     parser.add_argument('--contamination',default=0.05)
     parser.add_argument('--start_time',default='2019-07-20 00:00:00')
     parser.add_argument('--end_time',default='2019-08-20 00:00:00')
     parser.add_argument('--time_serie_name',default='ts')
-    parser.add_argument('--ground_truth',default='True')
+    parser.add_argument('--ground_truth',const=True,type=str2bool,nargs='?')
 
 
 
@@ -59,10 +56,10 @@ if __name__ == '__main__':
     if args.ground_truth:
 
         data,ground_truth = query_data(conn,cursor,args.database,args.table,
-                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie,args.ground_truth)
+                                   args.start_time,args.end_time,args.time_serie_name,ground_truth_whole,time_serie=args.time_serie,ground_truth_flag=args.ground_truth)
     else:
         data = query_data(conn,cursor,args.database,args.table,
-                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie,args.ground_truth)
+                                   args.start_time,args.end_time,args.time_serie_name,time_serie=args.time_serie,ground_truth_flag=args.ground_truth)
 
     print('Loading cost: %.6f seconds' %(time.clock() - start_time))
     print('Load data successful')
@@ -79,7 +76,7 @@ if __name__ == '__main__':
     if args.ground_truth:
         output_performance(args.algorithm,ground_truth,prediction_result,time.clock() - start_time,outlierness)
 
-    if args.visualize_distribution:
+    if args.visualize_distribution and args.ground_truth:
         if not args.time_serie:
             visualize_distribution_static(data,prediction_result,outlierness)
             visualize_distribution(data,prediction_result,outlierness)
