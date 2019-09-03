@@ -35,7 +35,7 @@ outlierness_score = clf.decision_function(test)
 visualize_distribution(X_test,prediction_result,outlierness_score)
 
 ```
-![](https://github.com/yli96/PyOutlierDetectionSys/blob/master/output/img/Result.png){:height="36px" width="60px"}.
+![](https://github.com/yli96/PyOutlierDetectionSys/blob/master/output/img/Result.png width="48")
 
 ## Installation
 
