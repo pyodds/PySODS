@@ -72,7 +72,7 @@ pip install git+https://github.com/yli96/PyOutlierDetectionSys.git
 #### Required Dependencies
 
 
-
+```sh
 - pandas>=0.25.0
 - taos==1.4.15
 - tensorflow==2.0.0b1
@@ -83,10 +83,36 @@ pip install git+https://github.com/yli96/PyOutlierDetectionSys.git
 - tqdm>=4.35.0
 - matplotlib>=3.1.1
 - scikit_learn>=0.21.3
+```
+
+## Implemented Algorithms
+#### Statistical Based Methods
+Methods | Algorithm | Class API
+------------ | -------------|-------------
+CBLOF | Clustering-Based Local Outlier Factor | :class:`algo.cblof.CBLOF`
+HBOS | Histogram-based Outlier Score | :class:`algo.hbos.HBOS`
+iForest | Isolation Forest | :class:`algo.iForest.iForest`
+KNN | k-Nearest Neighbors  | :class:`algo.knn.KNN`
+LOF | Local Outlier Factor | :class:`algo.cblof.CBLOF`
+OCSVM | One-Class Support Vector Machines | :class:`algo.ocsvm.OCSVM`
+PCA | Principal Component Analysis | :class:`algo.pca.PCA`
+RobustCovariance | Robust Covariance| :class:`algo.robustcovariance.robustcovariance`
+SOD | Subspace Outlier Detection| :class:`algo.sod.SOD`
+
+#### Deep Learning Based Methods
+Methods | Algorithm | Class API
+------------ | -------------|-------------
+autoencoder | Outlier detection using replicator neural networks | :class:`algo.autoencoder.AutoEncoder`
+dagmm | Deep autoencoding gaussian mixture model for unsupervised anomaly detection | :class:`algo.dagmm.DAGMM`
 
 
-## Gallery
+#### Time Serie Methods
+Methods | Algorithm | Class API
+------------ | -------------|-------------
+lstm_ad | Long short term memory networks for anomaly detection in time series | :class:`algo.lstm_ad.LSTMAD`
+lstm_enc_dec_axl | LSTM-based encoder-decoder for multi-sensor anomaly detection | :class:`algo.lstm_enc_dec_axl.LSTMED`
+Luminol | Linkedin's luminol	 | :class:`algo.Luminol.LuminolDet`
 
 
-## API
-
+## License
+You may use this software under the Apache 2.0 License. 
