@@ -97,7 +97,10 @@ sudo apt-get install maven
 ```
 To install the TDengine as the back-end database service, please refer to [this instruction](https://www.taosdata.com/en/getting-started/#Install-from-Package).
 
-
+To start the service after installation, in a terminal, use:
+```sh
+taosd
+```
 
 ## Implemented Algorithms
 #### Statistical Based Methods
