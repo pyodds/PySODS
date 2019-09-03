@@ -146,7 +146,7 @@ def connect_server(host,user,password):
     cursor = conn.cursor()
     return conn,cursor
 
-def query_data(conn,cursor,database,table,time_serie,start_time,end_time,ground_truth,time_serie_name):
+def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_serie_name,time_serie=False):
 
     # query data and return data in the form of list
     if start_time and end_time:

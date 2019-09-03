@@ -22,7 +22,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Anomaly Detection Platform Settings")
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--user', default='yli')
-    parser.add_argument('--password', default='0906')
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
@@ -42,18 +41,19 @@ if __name__ == '__main__':
     rng = np.random.RandomState(args.random_seed)
     np.random.seed(args.random_seed)
 
-    # args.password = getpass.getpass("Please input your password:")
+    password = getpass.getpass("Please input your password:")
 
     #connection configeration
-    conn,cursor=connect_server(args.host, args.user, args.password)
+    conn,cursor=connect_server(args.host, args.user, password)
 
     #read data
     print('Load dataset and table')
     start_time = time.clock()
     ground_truth_whole=insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie)
 
+
     data,ground_truth = query_data(conn,cursor,args.database,args.table,
-                                   args.time_serie,args.start_time,args.end_time,ground_truth_whole,args.time_serie_name)
+                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie)
 
     print('Loading cost: %.6f seconds' %(time.clock() - start_time))
     print('Load data successful')
