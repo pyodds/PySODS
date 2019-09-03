@@ -36,6 +36,11 @@ visualize_distribution(X_test,prediction_result,outlierness_score)
 
 ```
 
+#### Quick Start #### 
+```sh
+python main.py --ground_truth --visualize_distribution
+```
+
 #### Results are shown as:
 ```sh
 connect to TDengine success
