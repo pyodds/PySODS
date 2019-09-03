@@ -37,8 +37,6 @@ visualize_distribution(X_test,prediction_result,outlierness_score)
 ```
 ![](https://github.com/yli96/PyOutlierDetectionSys/blob/master/output/img/Result2.png)
 
-![](https://github.com/yli96/PyOutlierDetectionSys/blob/master/output/img/Result.png)
-
 ## Installation
 
 To install the package, please use the [`pip`](https://pip.pypa.io/en/stable/installing/) installation as follows:
