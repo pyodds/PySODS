@@ -35,6 +35,27 @@ outlierness_score = clf.decision_function(test)
 visualize_distribution(X_test,prediction_result,outlierness_score)
 
 ```
+
+#### Results are shown as:
+```sh
+connect to TDengine success
+Load dataset and table
+Loading cost: 0.151061 seconds
+Load data successful
+Start processing:
+100%|████████████████████| 10/10 [00:00<00:00, 14.02it/s]
+==============================
+Results in Algorithm dagmm are:
+accuracy_score: 0.98
+precision_score: 0.99
+recall_score: 0.99
+f1_score: 0.99
+processing time: 15.330137 seconds
+roc_auc_score: 0.99
+==============================
+connection is closed
+
+```
 <img src="https://github.com/yli96/PyOutlierDetectionSys/blob/master/output/img/Result.png" width="50%" height="45%">
 
 
