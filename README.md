@@ -43,7 +43,7 @@ Load dataset and table
 Loading cost: 0.151061 seconds
 Load data successful
 Start processing:
-100%|████████████████████| 10/10 [00:00<00:00, 14.02it/s]
+100%|████████████████████████████████████| 10/10 [00:00<00:00, 14.02it/s]
 ==============================
 Results in Algorithm dagmm are:
 accuracy_score: 0.98
@@ -84,6 +84,20 @@ pip install git+https://github.com/yli96/PyOutlierDetectionSys.git
 - matplotlib>=3.1.1
 - scikit_learn>=0.21.3
 ```
+To compile and package the JDBC driver source code, you should have a Java jdk-8 or higher and Apache Maven 2.7 or higher installed. To install openjdk-8 on Ubuntu:
+
+```sh
+sudo apt-get install openjdk-8-jdk
+```
+
+To install Apache Maven on Ubuntu:
+
+```sh
+sudo apt-get install maven
+```
+To install the TDengine as the back-end database service, please refer to [this instruction](https://www.taosdata.com/en/getting-started/#Install-from-Package).
+
+
 
 ## Implemented Algorithms
 #### Statistical Based Methods
@@ -113,6 +127,30 @@ lstm_ad | Long short term memory networks for anomaly detection in time series |
 lstm_enc_dec_axl | LSTM-based encoder-decoder for multi-sensor anomaly detection | :class:`algo.lstm_enc_dec_axl.LSTMED`
 Luminol | Linkedin's luminol	 | :class:`algo.Luminol.LuminolDet`
 
+## APIs Cheatsheet
+
+The Full API Reference can be found in `website`.
+
+- **connect_server(hostname,username,password)**: Connect to Apache backend TDengine Service.
+
+- **query_data(connection,cursor,database_name,table_name,start_time,end_time)**: Query data from table *table_name* in database *database_name* within a given time range.
+
+- **algorithm_selection(algorithm_name,contamination)**: Select an algorithm as detector.
+
+- **fit(X)**: Fit *X* to detector.
+
+- **predict(X)**: Predict if instance in *X* is outlier or not.
+
+- **decision_function(X)**: Output the anomaly score of instances in *X*.
+
+- **output_performance(algorithm_name,ground_truth,prediction_result,outlierness_score)**: Output the prediction result as evaluation matrix in *Accuracy*, *Precision*, *Recall*, *F1 Score*, *ROC-AUC Score*, *Cost time*.
+
+- **visualize_distribution(X,prediction_result,outlierness_score)**: Visualize the detection result with the the data distribution.
+
+- **visualize_outlierscore(outlierness_score,prediction_result,contamination)** Visualize the detection result with the outlier score.
+
 
 ## License
+<!-- Biblatex entry: -->
+
 You may use this software under the Apache 2.0 License. 

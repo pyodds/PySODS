@@ -32,6 +32,7 @@ if __name__ == '__main__':
     parser.add_argument('--start_time',default='2019-07-20 00:00:00')
     parser.add_argument('--end_time',default='2019-08-20 00:00:00')
     parser.add_argument('--time_serie_name',default='ts')
+    parser.add_argument('--ground_truth',default='True')
 
 
 
@@ -49,11 +50,19 @@ if __name__ == '__main__':
     #read data
     print('Load dataset and table')
     start_time = time.clock()
-    ground_truth_whole=insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie)
+    if args.ground_truth:
+        ground_truth_whole=insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie,args.ground_truth)
+    else:
+        insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie,args.ground_truth)
 
 
-    data,ground_truth = query_data(conn,cursor,args.database,args.table,
-                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie)
+    if args.ground_truth:
+
+        data,ground_truth = query_data(conn,cursor,args.database,args.table,
+                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie,args.ground_truth)
+    else:
+        data = query_data(conn,cursor,args.database,args.table,
+                                   args.start_time,args.end_time,ground_truth_whole,args.time_serie_name,args.time_serie,args.ground_truth)
 
     print('Loading cost: %.6f seconds' %(time.clock() - start_time))
     print('Load data successful')
@@ -67,7 +76,8 @@ if __name__ == '__main__':
     prediction_result = clf.predict(data)
     outlierness = clf.decision_function(data)
 
-    output_performance(args.algorithm,ground_truth,prediction_result,time.clock() - start_time,outlierness)
+    if args.ground_truth:
+        output_performance(args.algorithm,ground_truth,prediction_result,time.clock() - start_time,outlierness)
 
     if args.visualize_distribution:
         if not args.time_serie:

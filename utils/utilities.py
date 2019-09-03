@@ -12,7 +12,7 @@ from sklearn.utils import check_array
 MAX_INT = np.iinfo(np.int32).max
 MIN_INT = -1 * MAX_INT
 
-def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie):
+def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie,ground_truth_flag):
 
 
     # Create a database named db
@@ -98,14 +98,16 @@ def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie):
             conn.close()
             raise (err)
         start_time += time_interval
+    if ground_truth_flag:
 
-    n_outliers = 20
-    ground_truth = np.ones(840, dtype=int)
-    ground_truth[-n_outliers:] = -1
-    ground_truth[400:420] = -1
+        n_outliers = 20
+        ground_truth = np.ones(840, dtype=int)
+        ground_truth[-n_outliers:] = -1
+        ground_truth[400:420] = -1
 
-
-    return ground_truth
+        return ground_truth
+    else:
+        pass
 
 def connect_server(host,user,password):
     # Connect to TDengine server.
@@ -146,7 +148,7 @@ def connect_server(host,user,password):
     cursor = conn.cursor()
     return conn,cursor
 
-def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_serie_name,time_serie=False):
+def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_serie_name,time_serie=False,ground_truth_flag=True):
 
     # query data and return data in the form of list
     if start_time and end_time:
@@ -211,49 +213,56 @@ def query_data(conn,cursor,database,table,start_time,end_time,ground_truth,time_
     else:
         X = tmp.iloc[:, 1:]
 
-    if True:
-        try:
-            cursor.execute('select * from %s.%s' %(database,table))
-        except Exception as err:
-            conn.close()
-            raise (err)
-        whole_data = cursor.fetchall()
-        try:
-            cursor.execute('select * from %s.%s' %(database,table))
-        except Exception as err:
-            conn.close()
-            raise (err)
+    if ground_truth_flag:
+        if True:
+            try:
+                cursor.execute('select * from %s.%s' %(database,table))
+            except Exception as err:
+                conn.close()
+                raise (err)
+            whole_data = cursor.fetchall()
+            try:
+                cursor.execute('select * from %s.%s' %(database,table))
+            except Exception as err:
+                conn.close()
+                raise (err)
 
-        whole_tmp = pd.DataFrame(list(whole_data))
+            whole_tmp = pd.DataFrame(list(whole_data))
 
-        # ground_truth_mask= data[:,0]>=args.start_time and np.where(data[:,0]<=args.endtime
-        # ground_truth2=ground_truth[ground_truth_mask]
-        timestamp=np.array(whole_tmp.ix[:,0].to_numpy(), dtype='datetime64')
-        timestamp=np.reshape(timestamp,-1)
-        new_ground_truth=[]
-        if start_time and end_time:
-            for i in range(len(whole_tmp)):
-                if timestamp[i]>=np.datetime64(start_time) and timestamp[i]<=np.datetime64(end_time):
-                    new_ground_truth.append(ground_truth[i])
-        elif start_time and not end_time:
-            for i in range(len(whole_tmp)):
-                if timestamp[i]>=np.datetime64(start_time):
-                    new_ground_truth.append(ground_truth[i])
-        elif not start_time and  end_time:
-            for i in range(len(whole_tmp)):
-                if timestamp[i]<=np.datetime64(end_time):
-                    new_ground_truth.append(ground_truth[i])
-        elif not start_time and not end_time:
+            # ground_truth_mask= data[:,0]>=args.start_time and np.where(data[:,0]<=args.endtime
+            # ground_truth2=ground_truth[ground_truth_mask]
+            timestamp=np.array(whole_tmp.ix[:,0].to_numpy(), dtype='datetime64')
+            timestamp=np.reshape(timestamp,-1)
+            new_ground_truth=[]
+            if start_time and end_time:
+                for i in range(len(whole_tmp)):
+                    if timestamp[i]>=np.datetime64(start_time) and timestamp[i]<=np.datetime64(end_time):
+                        new_ground_truth.append(ground_truth[i])
+            elif start_time and not end_time:
+                for i in range(len(whole_tmp)):
+                    if timestamp[i]>=np.datetime64(start_time):
+                        new_ground_truth.append(ground_truth[i])
+            elif not start_time and  end_time:
+                for i in range(len(whole_tmp)):
+                    if timestamp[i]<=np.datetime64(end_time):
+                        new_ground_truth.append(ground_truth[i])
+            elif not start_time and not end_time:
+                new_ground_truth=ground_truth
+            new_ground_truth=np.array(new_ground_truth)
+        else:
             new_ground_truth=ground_truth
-        new_ground_truth=np.array(new_ground_truth)
+        X.fillna(method='ffill')
+        X.fillna(method='bfill')
+        return X, new_ground_truth
+
     else:
-        new_ground_truth=ground_truth
+        X.fillna(method='ffill')
+        X.fillna(method='bfill')
+        return X
 
-    X.fillna(method='ffill')
-    X.fillna(method='bfill')
 
 
-    return X,new_ground_truth
+
 
 
 
