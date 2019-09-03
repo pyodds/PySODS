@@ -8,7 +8,8 @@ import argparse
 import time
 import logging
 import getpass
-from utils.utils import output_performance,insert_demo_data,connect_server,query_data,algorithm_selection
+from utils.utilities import output_performance,insert_demo_data,connect_server,query_data
+from utils.import_algorithm import algorithm_selection
 from utils.plot_utils import visualize_distribution_static,visualize_distribution_time_serie,visualize_outlierscore,visualize_distribution
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)

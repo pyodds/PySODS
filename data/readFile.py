@@ -1,28 +1,31 @@
 import taos
+import os
 import os.path
 import numpy as np
 import pandas as pd
 from string import digits
 import argparse
-from ..utils.utils import connect_server
+
+from utils.utilities import connect_server
 
 def read_File(Filename,db,tablename,cursor,connection,insert=False):
     # use database
+    print(os.getcwd())
     if not os.path.exists(Filename):
-        raise FileNotFoundError("%s not exist." % (Filename))
+        raise FileNotFoundError("%s not exist." %(Filename))
     try:
-        cursor.execute('create database if not exists %s' %db)
+        cursor.execute('create database if not exists %s' %(db))
     except Exception as err:
         connection.close()
         raise (err)
 
     try:
-        cursor.execute('use %s' %db)
+        cursor.execute('use %s' %(db))
     except Exception as err:
         connection.close()
         raise (err)
 
-    df=pd.read_csv('Filename')
+    df=pd.read_csv(Filename)
     df_value=df.dtypes
     df_index=df_value.index
 
@@ -44,14 +47,14 @@ def read_File(Filename,db,tablename,cursor,connection,insert=False):
 
     if insert:
         try:
-            cursor.execute('insert into %s file %s' % (tablename, Filename))
+            cursor.execute('insert into  %s.%s file %s' % (db,tablename, Filename))
         except Exception as err:
             connection.close()
             raise (err)
 
     elif not insert:
         try:
-            cursor.execute('import into %s file %s' % (tablename, Filename))
+            cursor.execute('import into %s.%s file %s' % (db,tablename, Filename))
         except Exception as err:
             connection.close()
             raise (err)
@@ -63,11 +66,13 @@ if __name__ == '__main__':
     parser.add_argument('--password', default='0906')
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
-    parser.add_argument('--table',default='t')
-    parser.add_argument('--file_name',default='../demo2.csv')
+    parser.add_argument('--table',default='tt')
+    parser.add_argument('--file_name',default='demo2.csv')
+    parser.add_argument('--insert',default=False)
+
     args = parser.parse_args()
     connection,cursor=connect_server(args.host, args.user, args.password)
 
-    read_File(args.file_name, args.db, args.table, cursor, connection, insert=False)
+    read_File(args.file_name, args.database, args.table, cursor, connection, insert=False)
 
     connection.close()

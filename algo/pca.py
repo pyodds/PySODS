@@ -11,8 +11,7 @@ from sklearn.utils.validation import check_array
 from numpy import percentile
 
 from .base import Base
-from utils.utilities import check_parameter
-from utils.utilities import standardizer
+from utils.utilities import check_parameter,standardizer
 
 
 class PCA(Base):
