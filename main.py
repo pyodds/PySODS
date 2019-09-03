@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser.add_argument('--random_seed',default=42, type=int)
     parser.add_argument('--database',default='db')
     parser.add_argument('--table',default='t')
-    parser.add_argument('--time_serie',const=False,type=str2bool,nargs='?')
+    parser.add_argument('--time_stamp',const=True,type=str2bool,nargs='?')
     parser.add_argument('--visualize_distribution',const=True,type=str2bool,nargs='?')
     parser.add_argument('--algorithm',default='dagmm',choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
     parser.add_argument('--contamination',default=0.05)
@@ -48,18 +48,18 @@ if __name__ == '__main__':
     print('Load dataset and table')
     start_time = time.clock()
     if args.ground_truth:
-        ground_truth_whole=insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie,args.ground_truth)
+        ground_truth_whole=insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_stamp,args.ground_truth)
     else:
-        insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_serie,args.ground_truth)
+        insert_demo_data(conn,cursor,args.database,args.table,args.start_time,args.end_time,args.time_stamp,args.ground_truth)
 
 
     if args.ground_truth:
 
         data,ground_truth = query_data(conn,cursor,args.database,args.table,
-                                   args.start_time,args.end_time,args.time_serie_name,ground_truth_whole,time_serie=args.time_serie,ground_truth_flag=args.ground_truth)
+                                   args.start_time,args.end_time,args.time_serie_name,ground_truth_whole,time_serie=args.time_stamp,ground_truth_flag=args.ground_truth)
     else:
         data = query_data(conn,cursor,args.database,args.table,
-                                   args.start_time,args.end_time,args.time_serie_name,time_serie=args.time_serie,ground_truth_flag=args.ground_truth)
+                                   args.start_time,args.end_time,args.time_serie_name,time_serie=args.time_stamp,ground_truth_flag=args.ground_truth)
 
     print('Loading cost: %.6f seconds' %(time.clock() - start_time))
     print('Load data successful')
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         output_performance(args.algorithm,ground_truth,prediction_result,time.clock() - start_time,outlierness)
 
     if args.visualize_distribution and args.ground_truth:
-        if not args.time_serie:
+        if not args.time_stamp:
             visualize_distribution_static(data,prediction_result,outlierness)
             visualize_distribution(data,prediction_result,outlierness)
             visualize_outlierscore(outlierness,prediction_result,args.contamination)
