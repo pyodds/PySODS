@@ -36,7 +36,7 @@ visualize_distribution(X_test,prediction_result,outlierness_score)
 
 ```
 
-#### Quick Start #### 
+## Quick Start ##
 ```sh
 python main.py --ground_truth --visualize_distribution
 ```
