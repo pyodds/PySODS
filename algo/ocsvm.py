@@ -1,6 +1,7 @@
 from sklearn.svm import OneClassSVM
+from algo.base import Base
 
-class ocsvm(OneClassSVM):
+class ocsvm(OneClassSVM,Base):
     """Unsupervised Outlier Detection.
     Estimate the support of a high-dimensional distribution.
     The implementation is based on libsvm.

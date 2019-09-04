@@ -1,6 +1,7 @@
 from sklearn.covariance import EllipticEnvelope
+from algo.base import Base
 
-class robustcovariance(EllipticEnvelope):
+class robustcovariance(EllipticEnvelope,Base):
     '''
         """An object for detecting outliers in a Gaussian distributed dataset.
     Read more in the :ref:`User Guide <outlier_detection>`.

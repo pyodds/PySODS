@@ -9,7 +9,7 @@ from tensorflow.python.client import device_lib
 from torch.autograd import Variable
 
 
-class Algorithm(metaclass=abc.ABCMeta):
+class deepBase(metaclass=abc.ABCMeta):
     def __init__(self, module_name, name, seed, details=False):
         self.logger = logging.getLogger(module_name)
         self.name = name

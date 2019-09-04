@@ -5,8 +5,8 @@ import time
 import logging
 import getpass
 from utils.utilities import output_performance,insert_demo_data,connect_server,query_data
-from utils.import_algorithm import algorithm_selection
-from utils.plot_utils import visualize_distribution_static,visualize_distribution_time_serie,visualize_outlierscore,visualize_distribution
+from utils.importAlgorithm import algorithm_selection
+from utils.plotUtils import visualize_distribution_static,visualize_distribution_time_serie,visualize_outlierscore,visualize_distribution
 import warnings
 from utils.utilities import str2bool
 warnings.simplefilter(action='ignore', category=FutureWarning)

@@ -1,6 +1,7 @@
 from sklearn.ensemble.iforest import IsolationForest
+from algo.base import Base
 
-class iForest(IsolationForest):
+class iForest(IsolationForest,Base):
 
 
     """Isolation Forest Algorithm

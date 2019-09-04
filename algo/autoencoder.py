@@ -9,15 +9,15 @@ from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 from tqdm import trange
 
-from .algorithm_utils import Algorithm, PyTorchUtils
+from .algorithm_utils import deepBase, PyTorchUtils
 from algo.base import Base
 
 
-class AutoEncoder(Base,Algorithm, PyTorchUtils):
+class AutoEncoder(Base,deepBase, PyTorchUtils):
     def __init__(self, name: str='AutoEncoder', num_epochs: int=10, batch_size: int=20, lr: float=1e-3,
                  hidden_size: int=5, sequence_length: int=30, train_gaussian_percentage: float=0.25,
                  seed: int=None, gpu: int=None, details=True,contamination=0.05):
-        Algorithm.__init__(self, __name__, name, seed, details=details)
+        deepBase.__init__(self, __name__, name, seed, details=details)
         PyTorchUtils.__init__(self, seed, gpu)
         self.num_epochs = num_epochs
         self.batch_size = batch_size

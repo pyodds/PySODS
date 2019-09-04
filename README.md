@@ -102,6 +102,14 @@ sudo apt-get install maven
 ```
 To install the TDengine as the back-end database service, please refer to [this instruction](https://www.taosdata.com/en/getting-started/#Install-from-Package).
 
+To insure the locale in config file is valid:
+
+```sh
+sudo locale-gen "en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+locale
+
+```
 To start the service after installation, in a terminal, use:
 ```sh
 taosd

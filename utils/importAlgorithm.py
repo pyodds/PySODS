@@ -3,15 +3,15 @@ from algo.ocsvm import ocsvm
 from algo.lof import LOF
 from algo.robustcovariance import robustcovariance
 from algo.staticautoencoder import StaticAutoEncoder
-from algo.Luminol import LuminolDet
+from algo.luminolFunc import luminolDet
 from algo.cblof import CBLOF
 from algo.knn import KNN
 from algo.hbos import HBOS
 from algo.sod import SOD
 from algo.pca import PCA
 from algo.dagmm import DAGMM
-from algo.lstm_ad import LSTMAD
-from algo.lstm_enc_dec_axl import LSTMED
+from algo.lstmad import LSTMAD
+from algo.lstmencdec import LSTMED
 from algo.autoencoder import AutoEncoder
 
 def algorithm_selection(algorithm,random_state,contamination):
@@ -26,7 +26,7 @@ def algorithm_selection(algorithm,random_state,contamination):
                    'sod':SOD(contamination=contamination,n_neighbors=20, ref_set=10,alpha=0.8),
                    'pca':PCA(contamination=contamination, n_components=None, n_selected_components=None, copy=True, whiten=False, svd_solver='auto',tol=0.0, iterated_power='auto',random_state=random_state,weighted=True, standardization=True),
                    'dagmm':DAGMM(contamination=contamination,num_epochs=10, lambda_energy=0.1, lambda_cov_diag=0.005, lr=1e-3, batch_size=50, gmm_k=3, normal_percentile=80, sequence_length=30, autoencoder_args=None),
-                   'luminol': LuminolDet(contamination=contamination),
+                   'luminol': luminolDet(contamination=contamination),
                    'autoencoder':AutoEncoder(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25),
                    'lstm_ad':LSTMAD(contamination=contamination,len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1),
                    'lstm_ed':LSTMED(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25)

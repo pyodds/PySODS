@@ -5,16 +5,16 @@ from scipy.stats import multivariate_normal
 from torch.autograd import Variable
 from tqdm import trange
 
-from .algorithm_utils import Algorithm, PyTorchUtils
+from .algorithm_utils import deepBase, PyTorchUtils
 from algo.base import Base
 
 
-class LSTMAD(Base,Algorithm, PyTorchUtils):
+class LSTMAD(Base,deepBase, PyTorchUtils):
 
 
     def __init__(self, len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1,
                  seed: int=None, gpu: int=None, details=True,contamination=0.05):
-        Algorithm.__init__(self, __name__, 'LSTM-AD', seed, details=details)
+        deepBase.__init__(self, __name__, 'LSTM-AD', seed, details=details)
         PyTorchUtils.__init__(self, seed, gpu)
         self.num_epochs = num_epochs
         self.lr = lr

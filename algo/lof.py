@@ -1,6 +1,7 @@
 from sklearn.neighbors import LocalOutlierFactor
+from algo.base import Base
 
-class LOF(LocalOutlierFactor):
+class LOF(LocalOutlierFactor,Base):
 
     """Unsupervised Outlier Detection using Local Outlier Factor (LOF)
     The anomaly score of each sample is called Local Outlier Factor.

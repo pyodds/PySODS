@@ -11,13 +11,13 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from tqdm import trange
 
-from .algorithm_utils import Algorithm, PyTorchUtils
+from .algorithm_utils import deepBase, PyTorchUtils
 from .autoencoder import AutoEncoderModule
-from .lstm_enc_dec_axl import LSTMEDModule
+from .lstmencdec import LSTMEDModule
 from algo.base import Base
 
 
-class DAGMM(Base,Algorithm, PyTorchUtils):
+class DAGMM(Base,deepBase, PyTorchUtils):
     class AutoEncoder:
         NN = AutoEncoderModule
         LSTM = LSTMEDModule
@@ -26,7 +26,7 @@ class DAGMM(Base,Algorithm, PyTorchUtils):
                  normal_percentile=80, sequence_length=30, autoencoder_type=AutoEncoderModule, autoencoder_args=None,
                  hidden_size: int=5, seed: int=None, gpu: int=None, details=True,contamination=0.05):
         _name = 'LSTM-DAGMM' if autoencoder_type == LSTMEDModule else 'DAGMM'
-        Algorithm.__init__(self, __name__, _name, seed, details=details)
+        deepBase.__init__(self, __name__, _name, seed, details=details)
         PyTorchUtils.__init__(self, seed, gpu)
         self.num_epochs = num_epochs
         self.lambda_energy = lambda_energy
