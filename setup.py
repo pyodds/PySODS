@@ -24,7 +24,6 @@ setup(
         'tqdm',
         'pandas',
         'matplotlib',
-        'cipy',
     ],
     packages=find_packages(),
     python_requires='>=3.6',
