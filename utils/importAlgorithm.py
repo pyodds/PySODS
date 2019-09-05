@@ -1,7 +1,7 @@
-from algo.iForest import iForest
-from algo.ocsvm import ocsvm
+from algo.iforest import IFOREST
+from algo.ocsvm import OCSVM
 from algo.lof import LOF
-from algo.robustcovariance import robustcovariance
+from algo.robustcovariance import RCOV
 from algo.staticautoencoder import StaticAutoEncoder
 from algo.luminolFunc import luminolDet
 from algo.cblof import CBLOF
@@ -12,13 +12,13 @@ from algo.pca import PCA
 from algo.dagmm import DAGMM
 from algo.lstmad import LSTMAD
 from algo.lstmencdec import LSTMED
-from algo.autoencoder import AutoEncoder
+from algo.autoencoder import AUTOENCODER
 
 def algorithm_selection(algorithm,random_state,contamination):
-    algorithm_dic={'iforest':iForest(contamination=contamination,n_estimators=100,max_samples="auto", max_features=1.,bootstrap=False,n_jobs=None,behaviour='old',random_state=random_state,verbose=0,warm_start=False),
-                   'ocsvm':ocsvm(gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
+    algorithm_dic={'iforest':IFOREST(contamination=contamination,n_estimators=100,max_samples="auto", max_features=1.,bootstrap=False,n_jobs=None,behaviour='old',random_state=random_state,verbose=0,warm_start=False),
+                   'ocsvm':OCSVM(gamma='auto',kernel='rbf', degree=3,coef0=0.0, tol=1e-3, nu=0.5, shrinking=True, cache_size=200,verbose=False, max_iter=-1, random_state=random_state),
                    'lof': LOF(contamination=contamination,n_neighbors=20, algorithm='auto', leaf_size=30,metric='minkowski', p=2, metric_params=None, novelty=True, n_jobs=None),
-                   'robustcovariance':robustcovariance(random_state=random_state,store_precision=True, assume_centered=False,support_fraction=None, contamination=0.1),
+                   'robustcovariance':RCOV(random_state=random_state,store_precision=True, assume_centered=False,support_fraction=None, contamination=0.1),
                    'staticautoencoder':StaticAutoEncoder(contamination=contamination,epoch=100,dropout_rate=0.2,regularizer_weight=0.1,activation='relu',kernel_regularizer=0.01,loss_function='mse',optimizer='adam'),
                    'cblof':CBLOF(contamination=contamination,n_clusters=8, clustering_estimator=None, alpha=0.9, beta=5,use_weights=False, random_state=random_state,n_jobs=1),
                    'knn':KNN(contamination=contamination,n_neighbors=5, method='largest',radius=1.0, algorithm='auto', leaf_size=30, metric='minkowski', p=2, metric_params=None, n_jobs=1),
@@ -27,7 +27,7 @@ def algorithm_selection(algorithm,random_state,contamination):
                    'pca':PCA(contamination=contamination, n_components=None, n_selected_components=None, copy=True, whiten=False, svd_solver='auto',tol=0.0, iterated_power='auto',random_state=random_state,weighted=True, standardization=True),
                    'dagmm':DAGMM(contamination=contamination,num_epochs=10, lambda_energy=0.1, lambda_cov_diag=0.005, lr=1e-3, batch_size=50, gmm_k=3, normal_percentile=80, sequence_length=30, autoencoder_args=None),
                    'luminol': luminolDet(contamination=contamination),
-                   'autoencoder':AutoEncoder(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25),
+                   'autoencoder':AUTOENCODER(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25),
                    'lstm_ad':LSTMAD(contamination=contamination,len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1),
                    'lstm_ed':LSTMED(contamination=contamination,num_epochs=10, batch_size=20, lr=1e-3,hidden_size=5, sequence_length=30, train_gaussian_percentage=0.25)
                    }
