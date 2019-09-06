@@ -4,7 +4,7 @@ SQL Server Anomaly Detection Service is an open source software library for anom
 
 SQL-Server Anomaly Detection Service is featured for:
 
-- **Full Stack Service** which supports operations and maintenances from light-weight SQL based database to back-end machine learning algorithms;
+- **Full Stack Service** which supports operations and maintenances from light-weight SQL based database to back-end machine learning algorithms and makes the throughput speed faster;
 
 - **State-of-the-art Anomaly Detection Approaches** including **Statistical/Machine Learning/Deep Learning** models with unified APIs and detailed documentation;
 
@@ -121,27 +121,27 @@ Methods | Algorithm | Class API
 ------------ | -------------|-------------
 CBLOF | Clustering-Based Local Outlier Factor | :class:`algo.cblof.CBLOF`
 HBOS | Histogram-based Outlier Score | :class:`algo.hbos.HBOS`
-iForest | Isolation Forest | :class:`algo.iForest.iForest`
+IFOREST | Isolation Forest | :class:`algo.iforest.IFOREST`
 KNN | k-Nearest Neighbors  | :class:`algo.knn.KNN`
 LOF | Local Outlier Factor | :class:`algo.cblof.CBLOF`
 OCSVM | One-Class Support Vector Machines | :class:`algo.ocsvm.OCSVM`
 PCA | Principal Component Analysis | :class:`algo.pca.PCA`
-RobustCovariance | Robust Covariance| :class:`algo.robustcovariance.robustcovariance`
+RobustCovariance | Robust Covariance| :class:`algo.robustcovariance.RCOV`
 SOD | Subspace Outlier Detection| :class:`algo.sod.SOD`
 
 #### Deep Learning Based Methods
 Methods | Algorithm | Class API
 ------------ | -------------|-------------
-autoencoder | Outlier detection using replicator neural networks | :class:`algo.autoencoder.AutoEncoder`
+autoencoder | Outlier detection using replicator neural networks | :class:`algo.autoencoder.AUTOENCODER`
 dagmm | Deep autoencoding gaussian mixture model for unsupervised anomaly detection | :class:`algo.dagmm.DAGMM`
 
 
 #### Time Serie Methods
 Methods | Algorithm | Class API
 ------------ | -------------|-------------
-lstm_ad | Long short term memory networks for anomaly detection in time series | :class:`algo.lstm_ad.LSTMAD`
-lstm_enc_dec_axl | LSTM-based encoder-decoder for multi-sensor anomaly detection | :class:`algo.lstm_enc_dec_axl.LSTMED`
-Luminol | Linkedin's luminol	 | :class:`algo.Luminol.LuminolDet`
+lstmad | Long short term memory networks for anomaly detection in time series | :class:`algo.lstm_ad.LSTMAD`
+lstmencdec | LSTM-based encoder-decoder for multi-sensor anomaly detection | :class:`algo.lstm_enc_dec_axl.LSTMED`
+luminol | Linkedin's luminol	 | :class:`algo.luminol.LUMINOL`
 
 ## APIs Cheatsheet
 
