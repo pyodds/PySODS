@@ -14,6 +14,40 @@ from algo.base import Base
 
 
 class AUTOENCODER(Base,deepBase, PyTorchUtils):
+    """Auto Encoder (AE) is a type of neural networks for learning useful data representations unsupervisedly.
+    It could be used to detect outlying objects in the data by calculating the reconstruction errors.
+
+    Parameters
+    ----------
+
+    name: str, optional (default='AutoEncoder')
+        The name of the algorithm
+
+    num_epochs: int, optional (default=10)
+        The number of epochs
+
+    batch_size: int, optional (default=20)
+        The number of batch size
+
+    lr: float, optional (default=1e-3)
+        The speed of learning rate
+
+    hidden_size: int, optional (default=5)
+        The number of hidden layer
+
+    sequence_length: int, optional (default=30)
+        The length of sequence
+
+    train_gaussian_percentage: float, optional (default=0.25)
+        The percentage for gaussian training
+
+    seed: int, optional (default=None)
+        The random seed
+
+    contamination: float in (0., 0.5), optional (default=0.05)
+        The percentage of outliers
+
+    """
     def __init__(self, name: str='AutoEncoder', num_epochs: int=10, batch_size: int=20, lr: float=1e-3,
                  hidden_size: int=5, sequence_length: int=30, train_gaussian_percentage: float=0.25,
                  seed: int=None, gpu: int=None, details=True,contamination=0.05):
@@ -31,6 +65,13 @@ class AUTOENCODER(Base,deepBase, PyTorchUtils):
         self.mean, self.cov = None, None
 
     def fit(self, X: pd.DataFrame):
+
+        """Fit detector.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         data = X.values
@@ -67,6 +108,18 @@ class AUTOENCODER(Base,deepBase, PyTorchUtils):
         self.cov = np.cov(error_vectors, rowvar=False)
 
     def predict(self, X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)`,
+        and the threshold `contamination`.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1 - self.contamination) * len(ranking))]
@@ -79,6 +132,20 @@ class AUTOENCODER(Base,deepBase, PyTorchUtils):
 
 
     def decision_function(self, X: pd.DataFrame) -> np.array:
+        """Predict raw anomaly score of X using the fitted detector.
+        The anomaly score of an input sample is computed based on different
+        detector algorithms. For consistency, outliers are assigned with
+        larger anomaly scores.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The training input samples. Sparse matrices are accepted only
+            if they are supported by the base estimator.
+        Returns
+        -------
+        anomaly_scores : numpy array of shape (n_samples,)
+            The anomaly score of the input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         data = X.values

@@ -14,7 +14,34 @@ MAX_INT = np.iinfo(np.int32).max
 MIN_INT = -1 * MAX_INT
 
 def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie,ground_truth_flag):
+    """
+    Inserting demo_data. Monitoring the process of database operations with to create a database and table, with time stamps.
 
+    Parameters
+    ----------
+    conn: taos.connection.TDengineConnection
+        TDEnginine connection name.
+    cursor: taos.cursor.TDengineCursor
+        TDEnginine cursor name.
+    database: str
+        Connect database name.
+    table: str
+        Table to query from.
+    start_time: str
+        Time range, start from.
+    end_time: str
+        Time range, end from.
+    time_serie: bool, optional (default=False)
+        Whether contains time stamps as one of the features or not.
+    ground_truth_flag: bool, optional (default=False)
+        Whether uses ground truth to evaluate the performance or not.
+
+    Returns
+    -------
+    ground_truth: numpy array
+        The ground truth numpy array.
+
+    """
 
     # Create a database named db
     try:
@@ -110,23 +137,27 @@ def insert_demo_data(conn,consur,database,table,start_time,end_time,time_serie,g
     else:
         pass
 
-def connect_server(host,user,password):
-    # Connect to TDengine server.
-    #
-    # parameters:
-    # @host     : TDengine server IP address
-    # @user     : Username used to connect to TDengine server
-    # @password : Password
-    # @database : Database to use when connecting to TDengine server
-    # @config   : Configuration directory
-    conn = taos.connect(host,user,password,config="/etc/taos")
-    cursor = conn.cursor()
-    return conn,cursor
-
 
 
 def output_performance(algorithm,ground_truth,y_pred,time,outlierness):
-    print ('='*30)
+    """
+    Evaluate and output the performance given prediction results and groundtruth.
+
+    Parameters
+    ----------
+    algorithm: str
+        Which algorithm has been used.
+    ground_truth: numpy array of shape (n_train, )
+        The ground truth numpy array.
+    y_pred: numpy array of shape (n_train, )
+        The prediction results as numpy array.
+    time: time.time()
+        The cost time of processing.
+    outlierness: numpy array of shape (n_train, )
+        The outlierness results as numpy array.
+
+    """
+    print ('=' * 30)
     print ('Results in Algorithm %s are:' %algorithm)
     print ('accuracy_score: %.2f' %accuracy_score(ground_truth, y_pred))
     print ('precision_score: %.2f' %precision_score(ground_truth, y_pred))
@@ -137,6 +168,26 @@ def output_performance(algorithm,ground_truth,y_pred,time,outlierness):
     print('=' * 30)
 
 def connect_server(host,user,password):
+    """
+    Connect to server.
+
+    Parameters
+    ----------
+    host: str
+        Host name as the address of the TDEngine Server.
+    user: str
+        User name of the TDEngine Server.
+    password: str
+        Password for the TDEngine Server.
+
+    Returns
+    -------
+    conn: taos.connection.TDengineConnection
+        TDEnginine connection name.
+    cursor: taos.cursor.TDengineCursor
+        TDEnginine cursor name.
+
+    """
     # Connect to TDengine server.
     #
     # parameters:
@@ -150,7 +201,38 @@ def connect_server(host,user,password):
     return conn,cursor
 
 def query_data(conn,cursor,database,table,start_time,end_time,time_serie_name,ground_truth=None,time_serie=False,ground_truth_flag=True):
+    """
+    Query data from given time range and table.
 
+    Parameters
+    ----------
+    conn: taos.connection.TDengineConnection
+        TDEnginine connection name.
+    cursor: taos.cursor.TDengineCursor
+        TDEnginine cursor name.
+    database: str
+        Connect database name.
+    table: str
+        Table to query from.
+    start_time: str
+        Time range, start from.
+    end_time: str
+        Time range, end from.
+    time_serie_name: str
+        Time_serie column name in the table.
+    ground_truth: numpy array of shape (n_samples,), optional (default=None)
+        Ground truth value, for evaluation and visualization.
+    time_serie: bool, optional (default=False)
+        Whether contains time stamps as one of the features or not.
+    ground_truth_flag: bool, optional (default=False)
+        Whether uses ground truth to evaluate the performance or not.
+
+    Returns
+    -------
+    X: pandas DataFrame
+        Queried data as DataFrame from given table and time range.
+
+    """
     # query data and return data in the form of list
     if start_time and end_time:
         try:
@@ -379,6 +461,18 @@ def standardizer(X, X_t=None, keep_scalar=False):
         else:
             return scaler.transform(X), scaler.transform(X_t)
 def str2bool(v):
+    """
+    Convert string to bool variable.
+
+    Parameters
+    ----------
+    v: str
+        String needs to be convert. 'yes', 'true', 't', 'y', '1'; or 'no', 'false', 'f', 'n', '0'.
+    Returns
+    -------
+    Bool
+
+    """
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
         return True
     elif v.lower() in ('no', 'false', 'f', 'n', '0'):

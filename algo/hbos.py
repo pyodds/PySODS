@@ -70,15 +70,12 @@ class HBOS(Base):
         check_parameter(tol, 0, 1, param_name='tol')
 
     def fit(self, X, y=None):
-        """Fit detector. y is optional for unsupervised methods.
+        """Fit detector
 
         Parameters
         ----------
-        X : numpy array of shape (n_samples, n_features)
+        X : dataframe of shape (n_samples, n_features)
             The input samples.
-
-        y : numpy array of shape (n_samples,), optional (default=None)
-            The ground truth of the input samples (labels).
         """
         # validate inputs X and y (optional)
         X = check_array(X)
@@ -136,10 +133,9 @@ class HBOS(Base):
 
         Parameters
         ----------
-        X : numpy array of shape (n_samples, n_features)
+        X : dataframe of shape (n_samples, n_features)
             The training input samples. Sparse matrices are accepted only
             if they are supported by the base estimator.
-
         Returns
         -------
         anomaly_scores : numpy array of shape (n_samples,)
@@ -155,6 +151,18 @@ class HBOS(Base):
         return invert_order(np.sum(outlier_scores, axis=1))
 
     def predict(self, X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]

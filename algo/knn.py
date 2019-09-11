@@ -153,16 +153,13 @@ class KNN(Base):
                                        **kwargs)
         self.threshold = None
 
-    def fit(self, X, y=None):
+    def fit(self, X):
         """Fit detector. y is optional for unsupervised methods.
 
         Parameters
         ----------
-        X : numpy array of shape (n_samples, n_features)
+        X : dataframe of shape (n_samples, n_features)
             The input samples.
-
-        y : numpy array of shape (n_samples,), optional (default=None)
-            The ground truth of the input samples (labels).
         """
 
         # validate inputs X and y (optional)
@@ -195,10 +192,9 @@ class KNN(Base):
 
         Parameters
         ----------
-        X : numpy array of shape (n_samples, n_features)
+        X : dataframe of shape (n_samples, n_features)
             The training input samples. Sparse matrices are accepted only
             if they are supported by the base estimator.
-
         Returns
         -------
         anomaly_scores : numpy array of shape (n_samples,)
@@ -228,7 +224,18 @@ class KNN(Base):
         return pred_scores.ravel()
 
     def predict(self,X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
 
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies = self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]

@@ -10,6 +10,10 @@ from torch.autograd import Variable
 
 
 class deepBase(metaclass=abc.ABCMeta):
+    """
+    Abstract class for deep learning based detection algorithms.
+
+    """
     def __init__(self, module_name, name, seed, details=False):
         self.logger = logging.getLogger(module_name)
         self.name = name
@@ -39,6 +43,10 @@ class deepBase(metaclass=abc.ABCMeta):
 
 
 class PyTorchUtils(metaclass=abc.ABCMeta):
+    """
+    Abstract class for PyTorch based deep learning  detection algorithms.
+
+    """
     def __init__(self, seed, gpu):
         self.gpu = gpu
         self.seed = seed
@@ -61,6 +69,10 @@ class PyTorchUtils(metaclass=abc.ABCMeta):
 
 
 class TensorflowUtils(metaclass=abc.ABCMeta):
+    """
+    Abstract class for Tensorflow based deep learning  detection algorithms.
+
+    """
     def __init__(self, seed, gpu):
         self.gpu = gpu
         self.seed = seed

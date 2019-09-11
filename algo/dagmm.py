@@ -18,6 +18,44 @@ from algo.base import Base
 
 
 class DAGMM(Base,deepBase, PyTorchUtils):
+    """
+    Deep Autoencoding Gaussian Mixture Model for Unsupervised Anomaly Detection, Zong et al, 2018.
+    Unsupervised anomaly detection on multi- or high-dimensional data is of great importance in both fundamental machine learning research and industrial applications, for which density estimation lies at the core. Although previous approaches based on dimensionality reduction followed by density estimation have made fruitful progress, they mainly suffer from decoupled model learning with inconsistent optimization goals and incapability of preserving essential information in the low-dimensional space. In this paper, we present a Deep Autoencoding Gaussian Mixture Model (DAGMM) for unsupervised anomaly detection. Our model utilizes a deep autoencoder to generate a low-dimensional representation and reconstruction error for each input data point, which is further fed into a Gaussian Mixture Model (GMM). Instead of using decoupled two-stage training and the standard Expectation-Maximization (EM) algorithm, DAGMM jointly optimizes the parameters of the deep autoencoder and the mixture model simultaneously in an end-to-end fashion, leveraging a separate estimation network to facilitate the parameter learning of the mixture model. The joint optimization, which well balances autoencoding reconstruction, density estimation of latent representation, and regularization, helps the autoencoder escape from less attractive local optima and further reduce reconstruction errors, avoiding the need of pre-training.
+
+    Parameters
+    ----------
+    
+    num_epochs: int, optional (default=10)
+        The number of epochs
+        
+    lambda_energy: float, optional (default=0.1)
+        The parameter to balance the energy in loss function 
+    
+    lambda_cov_diag: float, optional (default=0.05)
+        The parameter to balance the covariance in loss function 
+
+    lr: float, optional (default=1e-3)
+        The speed of learning rate
+
+    batch_size: int, optional (default=50)
+        The number of samples in one batch
+    
+    gmm_k: int, optional (default=3)
+        The number of clusters in the Gaussian Mixture model
+        
+    sequence_length: int, optional (default=30)
+        The length of sequence
+
+    hidden_size: int, optional (default=5)
+        The size of hidden layer
+
+    seed: int, optional (default=None)
+        The random seed
+
+    contamination: float in (0., 0.5), optional (default=0.05)
+        The percentage of outliers
+
+    """
     class AutoEncoder:
         NN = AutoEncoderModule
         LSTM = LSTMEDModule
@@ -69,7 +107,12 @@ class DAGMM(Base,deepBase, PyTorchUtils):
 
     def fit(self, X: pd.DataFrame):
         """Learn the mixture probability, mean and covariance for each component k.
-        Store the computed energy based on the training data and the aforementioned parameters."""
+        Store the computed energy based on the training data and the aforementioned parameters.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         data = X.values
@@ -105,6 +148,18 @@ class DAGMM(Base,deepBase, PyTorchUtils):
 
             n += input_data.size(0)
     def predict(self, X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies =self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
@@ -115,8 +170,23 @@ class DAGMM(Base,deepBase, PyTorchUtils):
         return ranking
 
     def decision_function(self, X: pd.DataFrame):
-        """Using the learned mixture probability, mean and covariance for each component k, compute the energy on the
-        given data."""
+        """Predict raw anomaly score of X using the fitted detector.
+        The anomaly score of an input sample is computed based on different
+        detector algorithms. For consistency, outliers are assigned with
+        larger anomaly scores.
+        Using the learned mixture probability, mean and covariance for each component k, compute the energy on the
+        given data.
+
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The training input samples. Sparse matrices are accepted only
+            if they are supported by the base estimator.
+        Returns
+        -------
+        anomaly_scores : numpy array of shape (n_samples,)
+            The anomaly score of the input samples.
+        """
         self.dagmm.eval()
         X.interpolate(inplace=True)
         X.bfill(inplace=True)

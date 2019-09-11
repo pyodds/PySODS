@@ -7,6 +7,20 @@ sns.set(style="ticks")
 
 
 def visualize_distribution(X,prediction,score):
+    """
+    Visualize the original density distribution of the data in 2-dimension space.
+
+    Parameters
+    ----------
+    X: numpy array of shape (n_test, n_features)
+        Test data.
+    prediction: numpy array of shape (n_test, )
+        The prediction result of the test data.
+    score: umpy array of shape (n_test, )
+        The outlier score of the test data.
+
+    """
+
     sns.set(style="ticks")
     X=X.to_numpy()
     X_embedding = TSNE(n_components=2).fit_transform(X)
@@ -15,6 +29,19 @@ def visualize_distribution(X,prediction,score):
 
 
 def visualize_distribution_static(X,prediction,score):
+    """
+    Visualize the original distribution of the data in 2-dimension space, which outliers/inliers are colored as differnet scatter plot.
+
+    Parameters
+    ----------
+    X: numpy array of shape (n_test, n_features)
+        Test data.
+    prediction: numpy array of shape (n_test, )
+        The prediction result of the test data.
+    score: umpy array of shape (n_test, )
+        The outlier score of the test data.
+
+    """
     sns.set(style="darkgrid")
 
     X=X.to_numpy()
@@ -33,6 +60,15 @@ def visualize_distribution_static(X,prediction,score):
 
 
 def visualize_distribution_time_serie(ts,value):
+    """
+    Visualize the time-serie data in each individual dimensions.
+    Parameters
+    ----------
+    ts: numpy array of shape (n_test, n_features)
+        The value of the test time serie data.
+    value: numpy array of shape (n_test, )
+        The outlier score of the test data.
+    """
     sns.set(style="ticks")
 
     ts = pd.DatetimeIndex(ts)
@@ -46,6 +82,22 @@ def visualize_distribution_time_serie(ts,value):
 
 
 def visualize_outlierscore(value,label,contamination):
+    """
+    Visualize the predicted outlier score.
+
+    Parameters
+    ----------
+    value: numpy array of shape (n_test, )
+        The outlier score of the test data.
+    label: numpy array of shape (n_test, )
+        The label of test data produced by the algorithm.
+    contamination : float in (0., 0.5), optional (default=0.1)
+        The amount of contamination of the data set,
+        i.e. the proportion of outliers in the data set. Used when fitting to
+        define the threshold on the decision function.
+
+    """
+
     sns.set(style="darkgrid")
 
     ts = np.arange(len(value))
@@ -71,6 +123,16 @@ def visualize_outlierscore(value,label,contamination):
 
 
 def visualize_outlierresult(X,label):
+    """
+    Visualize the predicted outlier result.
+    Parameters
+    ----------
+    X: numpy array of shape (n_test, n_features)
+        The test data.
+    label: numpy array of shape (n_test, )
+        The label of test data produced by the algorithm.
+
+    """
     X['outlier']=pd.Series(label)
     pal = dict(inlier="#4CB391", outlier="gray")
     g = sns.pairplot(X, hue="outlier", palette=pal)

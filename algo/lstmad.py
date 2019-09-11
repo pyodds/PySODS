@@ -10,7 +10,40 @@ from algo.base import Base
 
 
 class LSTMAD(Base,deepBase, PyTorchUtils):
+    """Malhotra, Pankaj, et al. "Long short term memory networks for anomaly detection in time series." Proceedings. Presses universitaires de Louvain, 2015.
 
+    Long Short Term Memory (LSTM) networks have been
+    demonstrated to be particularly useful for learning sequences containing
+    longer term patterns of unknown length, due to their ability to maintain
+    long term memory. Stacking recurrent hidden layers in such networks also
+    enables the learning of higher level temporal features, for faster learning
+    with sparser representations. In this paper, we use stacked LSTM networks for anomaly/fault detection in time series. A network is trained on
+    non-anomalous data and used as a predictor over a number of time steps.
+    The resulting prediction errors are modeled as a multivariate Gaussian
+    distribution, which is used to assess the likelihood of anomalous behavior.
+
+    Parameters
+    ----------
+
+    len_in: int, optional (default=1)
+        The length of input layer
+
+    len_out: int, optional (default=10)
+        The length of output layer
+
+    num_epochs: int, optional (default=100)
+        The number of epochs
+
+    lr: float, optional (default=1e-3)
+        The speed of learning rate
+
+    seed: int, optional (default=None)
+        The random seed
+
+    contamination: float in (0., 0.5), optional (default=0.05)
+        The percentage of outliers
+
+    """
 
     def __init__(self, len_in=1, len_out=10, num_epochs=100, lr=1e-3, batch_size=1,
                  seed: int=None, gpu: int=None, details=True,contamination=0.05):
@@ -27,6 +60,12 @@ class LSTMAD(Base,deepBase, PyTorchUtils):
         self.contamination=contamination
 
     def fit(self, X):
+        """Fit detector.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         self.batch_size = 1
@@ -49,6 +88,18 @@ class LSTMAD(Base,deepBase, PyTorchUtils):
         self.cov = np.cov(norm.T)
 
     def predict(self, X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies =self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
@@ -59,6 +110,22 @@ class LSTMAD(Base,deepBase, PyTorchUtils):
         return ranking
 
     def decision_function(self, X):
+        """Predict raw anomaly score of X using the fitted detector.
+
+        The anomaly score of an input sample is computed based on different
+        detector algorithms. For consistency, outliers are assigned with
+        larger anomaly scores.
+
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The training input samples. Sparse matrices are accepted only
+            if they are supported by the base estimator.
+        Returns
+        -------
+        anomaly_scores : numpy array of shape (n_samples,)
+            The anomaly score of the input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         self.model.eval()

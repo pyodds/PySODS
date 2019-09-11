@@ -31,6 +31,12 @@ class StaticAutoEncoder(Base):
         return model
 
     def fit(self, X):
+        """Fit detector.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+        """
         scaler = preprocessing.RobustScaler().fit(X)
         X_train = scaler.transform(X)
         if self.hidden_neurons is None:
@@ -43,6 +49,18 @@ class StaticAutoEncoder(Base):
         return self
 
     def predict(self, X):
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         reconstruct_error= (np.square(self.model.predict(X)-X)).mean(axis=1)
         ranking = np.sort(reconstruct_error)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
@@ -53,6 +71,22 @@ class StaticAutoEncoder(Base):
         return ranking
 
     def decision_function(self,X):
+        """Predict raw anomaly score of X using the fitted detector.
+
+        The anomaly score of an input sample is computed based on different
+        detector algorithms. For consistency, outliers are assigned with
+        larger anomaly scores.
+
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The training input samples. Sparse matrices are accepted only
+            if they are supported by the base estimator.
+        Returns
+        -------
+        anomaly_scores : numpy array of shape (n_samples,)
+            The anomaly score of the input samples.
+        """
         reconstruct_error= (np.square(self.model.predict(X)-X)).mean(axis=1)
         return reconstruct_error
 

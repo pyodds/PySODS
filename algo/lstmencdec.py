@@ -14,6 +14,53 @@ from algo.base import Base
 
 
 class LSTMED(Base,deepBase, PyTorchUtils):
+    """
+    Malhotra, Pankaj, et al. "LSTM-based encoder-decoder for multi-sensor anomaly detection." ICML, 2016.
+
+
+    Mechanical devices such as engines, vehicles, aircrafts, etc., are typically instrumented with numerous sensors to capture the behavior and health of the machine. However, there are often external factors or variables which are not captured by sensors leading to time-series which are inherently unpredictable. For instance, manual controls and/or unmonitored environmental conditions or load may lead to inherently unpredictable time-series. Detecting anomalies in such scenarios becomes challenging using standard approaches based on mathematical models that rely on stationarity, or prediction models that utilize prediction errors to detect anomalies. We propose a Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection (EncDec-AD) that learns to reconstruct 'normal' time-series behavior, and thereafter uses reconstruction error to detect anomalies. We experiment with three publicly available quasi predictable time-series datasets: power demand, space shuttle, and ECG, and two real-world engine datasets with both predictive and unpredictable behavior.
+
+    Parameters
+    ----------
+
+    name: str, optional default='LSTM-ED'
+        The name of the algorithm
+
+    num_epochs: int, optional (default=10)
+        The number of epochs
+
+    batch_size: int, optional (default=20)
+        The number of batch size
+
+    lr: float, optional (default=1e-3)
+        The speed of learning rate
+
+    hidden_size: int, optional (default=5)
+        The number of hidden layer
+
+    sequence_length: int, optional (default=30)
+        The length of sequence
+
+    train_gaussian_percentage: float, optional (default=0.25)
+        The percentage for gaussian training
+
+    n_layers: tuple, optional (default=(1,1))
+        The number of hidden layers
+
+    use_bias: tuple, optional (default=(True, True))
+        Whether use bias or not in hidden layers
+
+    dropout: tuple, optional (default=(0, 0))
+        Dropout rates in hidden layers
+
+    seed: int, optional (default=None)
+        The random seed
+
+    contamination: float in (0., 0.5), optional (default=0.05)
+        The percentage of outliers
+
+    """
+
     def __init__(self, name: str='LSTM-ED', num_epochs: int=10, batch_size: int=20, lr: float=1e-3,
                  hidden_size: int=5, sequence_length: int=30, train_gaussian_percentage: float=0.25,
                  n_layers: tuple=(1, 1), use_bias: tuple=(True, True), dropout: tuple=(0, 0),
@@ -37,6 +84,12 @@ class LSTMED(Base,deepBase, PyTorchUtils):
         self.contamination=contamination
 
     def fit(self, X: pd.DataFrame):
+        """Fit detector.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         data = X.values
@@ -75,6 +128,19 @@ class LSTMED(Base,deepBase, PyTorchUtils):
         self.cov = np.cov(error_vectors, rowvar=False)
 
     def predict(self, X):
+
+        """Return outliers with -1 and inliers with 1, with the outlierness score calculated from the `decision_function(X)',
+        and the threshold `contamination'.
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The input samples.
+
+        Returns
+        -------
+        ranking : numpy array of shape (n_samples,)
+            The outlierness of the input samples.
+        """
         anomalies =self.decision_function(X)
         ranking = np.sort(anomalies)
         threshold = ranking[int((1-self.contamination)*len(ranking))]
@@ -86,6 +152,22 @@ class LSTMED(Base,deepBase, PyTorchUtils):
 
 
     def decision_function(self, X: pd.DataFrame):
+        """Predict raw anomaly score of X using the fitted detector.
+
+        The anomaly score of an input sample is computed based on different
+        detector algorithms. For consistency, outliers are assigned with
+        larger anomaly scores.
+
+        Parameters
+        ----------
+        X : dataframe of shape (n_samples, n_features)
+            The training input samples. Sparse matrices are accepted only
+            if they are supported by the base estimator.
+        Returns
+        -------
+        anomaly_scores : numpy array of shape (n_samples,)
+            The anomaly score of the input samples.
+        """
         X.interpolate(inplace=True)
         X.bfill(inplace=True)
         data = X.values
