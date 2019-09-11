@@ -20,7 +20,7 @@ def algorithm_selection(algorithm,random_state,contamination):
 
     Parameters
     ----------
-    algorithm: str, optional (default='iforest')
+    algorithm: str, optional (default='iforest', choices=['iforest','lof','ocsvm','robustcovariance','staticautoencoder','luminol','cblof','knn','hbos','sod','pca','dagmm','autoencoder','lstm_ad','lstm_ed'])
         The name of the algorithm.
     random_state: np.random.RandomState
         The random state from the given random seeds.
