@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>utils package &mdash; pysods 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="pysods 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pysods
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#utils-importalgorithm-module">utils.importAlgorithm module</a></li>
+<li><a class="reference internal" href="#module-utils.plotUtils">utils.plotUtils module</a></li>
+<li><a class="reference internal" href="#utils-utilities-module">utils.utilities module</a></li>
+<li><a class="reference internal" href="#module-utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pysods</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="utils-package">
+<h1>utils package<a class="headerlink" href="#utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="utils-importalgorithm-module">
+<h2>utils.importAlgorithm module<a class="headerlink" href="#utils-importalgorithm-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-utils.plotUtils">
+<span id="utils-plotutils-module"></span><h2>utils.plotUtils module<a class="headerlink" href="#module-utils.plotUtils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="utils.plotUtils.visualize_distribution">
+<code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_distribution</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">prediction</em>, <em class="sig-param">score</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the original density distribution of the data in 2-dimension space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>n_features</em><em>)</em>) – Test data.</p></li>
+<li><p><strong>prediction</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The prediction result of the test data.</p></li>
+<li><p><strong>score</strong> (<em>umpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The outlier score of the test data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.plotUtils.visualize_distribution_static">
+<code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_distribution_static</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">prediction</em>, <em class="sig-param">score</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_distribution_static" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the original distribution of the data in 2-dimension space, which outliers/inliers are colored as differnet scatter plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>n_features</em><em>)</em>) – Test data.</p></li>
+<li><p><strong>prediction</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The prediction result of the test data.</p></li>
+<li><p><strong>score</strong> (<em>umpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The outlier score of the test data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.plotUtils.visualize_distribution_time_serie">
+<code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_distribution_time_serie</code><span class="sig-paren">(</span><em class="sig-param">ts</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_distribution_time_serie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the time-serie data in each individual dimensions.
+:param ts: The value of the test time serie data.
+:type ts: numpy array of shape (n_test, n_features)
+:param value: The outlier score of the test data.
+:type value: numpy array of shape (n_test, )</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.plotUtils.visualize_outlierresult">
+<code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_outlierresult</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">label</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_outlierresult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the predicted outlier result.
+:param X: The test data.
+:type X: numpy array of shape (n_test, n_features)
+:param label: The label of test data produced by the algorithm.
+:type label: numpy array of shape (n_test, )</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.plotUtils.visualize_outlierscore">
+<code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_outlierscore</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">label</em>, <em class="sig-param">contamination</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_outlierscore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the predicted outlier score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The outlier score of the test data.</p></li>
+<li><p><strong>label</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The label of test data produced by the algorithm.</p></li>
+<li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The amount of contamination of the data set,
+i.e. the proportion of outliers in the data set. Used when fitting to
+define the threshold on the decision function.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="utils-utilities-module">
+<h2>utils.utilities module<a class="headerlink" href="#utils-utilities-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Yuening Li.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE: 'true'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
