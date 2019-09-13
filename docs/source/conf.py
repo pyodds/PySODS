@@ -1,4 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
+#nfiguration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.append('/Users/anthony/2020/PG/pysods')
+sys.path.append('/home/liyuening/PG/PySODS')
 
 # -- Project information -----------------------------------------------------
 

@@ -23,7 +23,6 @@ class CBLOF(Base):
 
     Parameters
     ----------
-
      n_clusters : int, optional (default=8)
         The number of clusters to form as well as the number of
         centroids to generate.

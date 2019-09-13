@@ -350,6 +350,7 @@ def query_data(conn,cursor,database,table,start_time,end_time,time_serie_name,gr
 def check_parameter(param, low=MIN_INT, high=MAX_INT, param_name='',
                     include_left=False, include_right=False):
     """Check if an input is within the defined range.
+
     Parameters
     ----------
     param : int, float
@@ -424,6 +425,7 @@ def check_parameter(param, low=MIN_INT, high=MAX_INT, param_name='',
 def standardizer(X, X_t=None, keep_scalar=False):
     """Conduct Z-normalization on data to turn input samples become zero-mean
     and unit variance.
+    
     Parameters
     ----------
     X : numpy array of shape (n_samples, n_features)

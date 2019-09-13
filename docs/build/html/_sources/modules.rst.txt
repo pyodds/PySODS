@@ -1,4 +1,4 @@
-pysods
+PySODS
 ======
 
 .. toctree::

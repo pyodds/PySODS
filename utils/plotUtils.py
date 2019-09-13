@@ -18,7 +18,6 @@ def visualize_distribution(X,prediction,score):
         The prediction result of the test data.
     score: umpy array of shape (n_test, )
         The outlier score of the test data.
-
     """
 
     sns.set(style="ticks")
@@ -40,7 +39,6 @@ def visualize_distribution_static(X,prediction,score):
         The prediction result of the test data.
     score: umpy array of shape (n_test, )
         The outlier score of the test data.
-
     """
     sns.set(style="darkgrid")
 
@@ -62,6 +60,7 @@ def visualize_distribution_static(X,prediction,score):
 def visualize_distribution_time_serie(ts,value):
     """
     Visualize the time-serie data in each individual dimensions.
+
     Parameters
     ----------
     ts: numpy array of shape (n_test, n_features)
@@ -95,7 +94,6 @@ def visualize_outlierscore(value,label,contamination):
         The amount of contamination of the data set,
         i.e. the proportion of outliers in the data set. Used when fitting to
         define the threshold on the decision function.
-
     """
 
     sns.set(style="darkgrid")
@@ -125,6 +123,7 @@ def visualize_outlierscore(value,label,contamination):
 def visualize_outlierresult(X,label):
     """
     Visualize the predicted outlier result.
+
     Parameters
     ----------
     X: numpy array of shape (n_test, n_features)

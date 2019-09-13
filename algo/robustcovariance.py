@@ -3,8 +3,8 @@ from algo.base import Base
 
 class RCOV(EllipticEnvelope,Base):
     '''
-        """An object for detecting outliers in a Gaussian distributed dataset.
-    Read more in the :ref:`User Guide <outlier_detection>`.
+        An object for detecting outliers in a Gaussian distributed dataset.
+
     Parameters
     ----------
     store_precision : boolean, optional (default=True)
@@ -30,6 +30,7 @@ class RCOV(EllipticEnvelope,Base):
         generator; If RandomState instance, random_state is the random number
         generator; If None, the random number generator is the RandomState
         instance used by `np.random`.
+
     Attributes
     ----------
     location_ : array-like, shape (n_features,)

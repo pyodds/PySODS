@@ -14,6 +14,7 @@ class LOF(LocalOutlierFactor,Base):
     By comparing the local density of a sample to the local densities of
     its neighbors, one can identify samples that have a substantially lower
     density than their neighbors. These are considered outliers.
+
     Parameters
     ----------
     n_neighbors : int, optional (default=20)
@@ -45,8 +46,9 @@ class LOF(LocalOutlierFactor,Base):
         distance between them. This works for Scipy's metrics, but is less
         efficient than passing the metric name as a string.
         Valid values for metric are:
-        - from scikit-learn: ['cityblock', 'cosine', 'euclidean', 'l1', 'l2',
-          'manhattan']
+
+        - from scikit-learn: ['cityblock', 'cosine', 'euclidean', 'l1', 'l2', 'manhattan']
+        
         - from scipy.spatial.distance: ['braycurtis', 'canberra', 'chebyshev',
           'correlation', 'dice', 'hamming', 'jaccard', 'kulsinski',
           'mahalanobis', 'minkowski', 'rogerstanimoto', 'russellrao',

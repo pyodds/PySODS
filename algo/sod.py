@@ -12,14 +12,13 @@ class SOD(Base):
     object, SOD explores the axis-parallel subspace spanned by the data
     object's neighbors and determines how much the object deviates from the
     neighbors in this subspace.
-    See :cite:`kriegel2009outlier` for details.
+
     Parameters
     ----------
     n_neighbors : int, optional (default=20)
         Number of neighbors to use by default for k neighbors queries.
     ref_set: int, optional (default=10)
-        specifies the number of shared nearest neighbors to create the
-        reference set. Note that ref_set must be smaller than n_neighbors.
+        Specifies the number of shared nearest neighbors to create the reference set. Note that ref_set must be smaller than n_neighbors.
     alpha: float in (0., 1.), optional (default=0.8)
            specifies the lower limit for selecting subspace.
            0.8 is set as default as suggested in the original paper.
@@ -27,6 +26,7 @@ class SOD(Base):
         The amount of contamination of the data set, i.e.
         the proportion of outliers in the data set. Used when fitting to
         define the threshold on the decision function.
+
     Attributes
     ----------
     decision_scores_ : numpy array of shape (n_samples,)

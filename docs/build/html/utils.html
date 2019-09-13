@@ -83,9 +83,9 @@
                 <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">utils package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#utils-importalgorithm-module">utils.importAlgorithm module</a></li>
+<li><a class="reference internal" href="#module-utils.importAlgorithm">utils.importAlgorithm module</a></li>
 <li><a class="reference internal" href="#module-utils.plotUtils">utils.plotUtils module</a></li>
-<li><a class="reference internal" href="#utils-utilities-module">utils.utilities module</a></li>
+<li><a class="reference internal" href="#module-utils.utilities">utils.utilities module</a></li>
 <li><a class="reference internal" href="#module-utils">Module contents</a></li>
 </ul>
 </li>
@@ -152,8 +152,31 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="utils-importalgorithm-module">
-<h2>utils.importAlgorithm module<a class="headerlink" href="#utils-importalgorithm-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-utils.importAlgorithm">
+<span id="utils-importalgorithm-module"></span><h2>utils.importAlgorithm module<a class="headerlink" href="#module-utils.importAlgorithm" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="utils.importAlgorithm.algorithm_selection">
+<code class="sig-prename descclassname">utils.importAlgorithm.</code><code class="sig-name descname">algorithm_selection</code><span class="sig-paren">(</span><em class="sig-param">algorithm</em>, <em class="sig-param">random_state</em>, <em class="sig-param">contamination</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.importAlgorithm.algorithm_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select algorithm from tokens.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default='iforest'</em><em>, </em><em>choices=</em><em>[</em><em>'iforest'</em><em>,</em><em>'lof'</em><em>,</em><em>'ocsvm'</em><em>,</em><em>'robustcovariance'</em><em>,</em><em>'staticautoencoder'</em><em>,</em><em>'luminol'</em><em>,</em><em>'cblof'</em><em>,</em><em>'knn'</em><em>,</em><em>'hbos'</em><em>,</em><em>'sod'</em><em>,</em><em>'pca'</em><em>,</em><em>'dagmm'</em><em>,</em><em>'autoencoder'</em><em>,</em><em>'lstm_ad'</em><em>,</em><em>'lstm_ed'</em><em>]</em><em>)</em>) – The name of the algorithm.</p></li>
+<li><p><strong>random_state</strong> (<em>np.random.RandomState</em>) – The random state from the given random seeds.</p></li>
+<li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The amount of contamination of the data set,
+i.e. the proportion of outliers in the data set. Used when fitting to
+define the threshold on the decision function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>alg</strong> – The selected algorithm method.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-utils.plotUtils">
 <span id="utils-plotutils-module"></span><h2>utils.plotUtils module<a class="headerlink" href="#module-utils.plotUtils" title="Permalink to this headline">¶</a></h2>
@@ -190,21 +213,29 @@
 <dl class="function">
 <dt id="utils.plotUtils.visualize_distribution_time_serie">
 <code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_distribution_time_serie</code><span class="sig-paren">(</span><em class="sig-param">ts</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_distribution_time_serie" title="Permalink to this definition">¶</a></dt>
-<dd><p>Visualize the time-serie data in each individual dimensions.
-:param ts: The value of the test time serie data.
-:type ts: numpy array of shape (n_test, n_features)
-:param value: The outlier score of the test data.
-:type value: numpy array of shape (n_test, )</p>
+<dd><p>Visualize the time-serie data in each individual dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ts</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>n_features</em><em>)</em>) – The value of the test time serie data.</p></li>
+<li><p><strong>value</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The outlier score of the test data.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="utils.plotUtils.visualize_outlierresult">
 <code class="sig-prename descclassname">utils.plotUtils.</code><code class="sig-name descname">visualize_outlierresult</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">label</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.plotUtils.visualize_outlierresult" title="Permalink to this definition">¶</a></dt>
-<dd><p>Visualize the predicted outlier result.
-:param X: The test data.
-:type X: numpy array of shape (n_test, n_features)
-:param label: The label of test data produced by the algorithm.
-:type label: numpy array of shape (n_test, )</p>
+<dd><p>Visualize the predicted outlier result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>n_features</em><em>)</em>) – The test data.</p></li>
+<li><p><strong>label</strong> (<em>numpy array of shape</em><em> (</em><em>n_test</em><em>, </em><em>)</em>) – The label of test data produced by the algorithm.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -225,8 +256,166 @@ define the threshold on the decision function.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="utils-utilities-module">
-<h2>utils.utilities module<a class="headerlink" href="#utils-utilities-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-utils.utilities">
+<span id="utils-utilities-module"></span><h2>utils.utilities module<a class="headerlink" href="#module-utils.utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="utils.utilities.check_parameter">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">check_parameter</code><span class="sig-paren">(</span><em class="sig-param">param</em>, <em class="sig-param">low=-2147483647</em>, <em class="sig-param">high=2147483647</em>, <em class="sig-param">param_name=''</em>, <em class="sig-param">include_left=False</em>, <em class="sig-param">include_right=False</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.check_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an input is within the defined range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param</strong> (<em>int</em><em>, </em><em>float</em>) – The input parameter to check.</p></li>
+<li><p><strong>low</strong> (<em>int</em><em>, </em><em>float</em>) – The lower bound of the range.</p></li>
+<li><p><strong>high</strong> (<em>int</em><em>, </em><em>float</em>) – The higher bound of the range.</p></li>
+<li><p><strong>param_name</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default=''</em><em>)</em>) – The name of the parameter.</p></li>
+<li><p><strong>include_left</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether includes the lower bound (lower bound &lt;=).</p></li>
+<li><p><strong>include_right</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether includes the higher bound (&lt;= higher bound).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>within_range</strong> – Whether the parameter is within the range of (low, high)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool or raise errors</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.connect_server">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">connect_server</code><span class="sig-paren">(</span><em class="sig-param">host</em>, <em class="sig-param">user</em>, <em class="sig-param">password</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.connect_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – Host name as the address of the TDEngine Server.</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – User name of the TDEngine Server.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password for the TDEngine Server.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>conn</strong> (<em>taos.connection.TDengineConnection</em>) – TDEnginine connection name.</p></li>
+<li><p><strong>cursor</strong> (<em>taos.cursor.TDengineCursor</em>) – TDEnginine cursor name.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.insert_demo_data">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">insert_demo_data</code><span class="sig-paren">(</span><em class="sig-param">conn</em>, <em class="sig-param">consur</em>, <em class="sig-param">database</em>, <em class="sig-param">table</em>, <em class="sig-param">start_time</em>, <em class="sig-param">end_time</em>, <em class="sig-param">time_serie</em>, <em class="sig-param">ground_truth_flag</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.insert_demo_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserting demo_data. Monitoring the process of database operations with to create a database and table, with time stamps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conn</strong> (<em>taos.connection.TDengineConnection</em>) – TDEnginine connection name.</p></li>
+<li><p><strong>cursor</strong> (<em>taos.cursor.TDengineCursor</em>) – TDEnginine cursor name.</p></li>
+<li><p><strong>database</strong> (<em>str</em>) – Connect database name.</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – Table to query from.</p></li>
+<li><p><strong>start_time</strong> (<em>str</em>) – Time range, start from.</p></li>
+<li><p><strong>end_time</strong> (<em>str</em>) – Time range, end from.</p></li>
+<li><p><strong>time_serie</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether contains time stamps as one of the features or not.</p></li>
+<li><p><strong>ground_truth_flag</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether uses ground truth to evaluate the performance or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>ground_truth</strong> – The ground truth numpy array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.output_performance">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">output_performance</code><span class="sig-paren">(</span><em class="sig-param">algorithm</em>, <em class="sig-param">ground_truth</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">time</em>, <em class="sig-param">outlierness</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.output_performance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate and output the performance given prediction results and groundtruth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithm</strong> (<em>str</em>) – Which algorithm has been used.</p></li>
+<li><p><strong>ground_truth</strong> (<em>numpy array of shape</em><em> (</em><em>n_train</em><em>, </em><em>)</em>) – The ground truth numpy array.</p></li>
+<li><p><strong>y_pred</strong> (<em>numpy array of shape</em><em> (</em><em>n_train</em><em>, </em><em>)</em>) – The prediction results as numpy array.</p></li>
+<li><p><strong>time</strong> (<em>time.time</em><em>(</em><em>)</em>) – The cost time of processing.</p></li>
+<li><p><strong>outlierness</strong> (<em>numpy array of shape</em><em> (</em><em>n_train</em><em>, </em><em>)</em>) – The outlierness results as numpy array.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.query_data">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">query_data</code><span class="sig-paren">(</span><em class="sig-param">conn</em>, <em class="sig-param">cursor</em>, <em class="sig-param">database</em>, <em class="sig-param">table</em>, <em class="sig-param">start_time</em>, <em class="sig-param">end_time</em>, <em class="sig-param">time_serie_name</em>, <em class="sig-param">ground_truth=None</em>, <em class="sig-param">time_serie=False</em>, <em class="sig-param">ground_truth_flag=True</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.query_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query data from given time range and table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conn</strong> (<em>taos.connection.TDengineConnection</em>) – TDEnginine connection name.</p></li>
+<li><p><strong>cursor</strong> (<em>taos.cursor.TDengineCursor</em>) – TDEnginine cursor name.</p></li>
+<li><p><strong>database</strong> (<em>str</em>) – Connect database name.</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – Table to query from.</p></li>
+<li><p><strong>start_time</strong> (<em>str</em>) – Time range, start from.</p></li>
+<li><p><strong>end_time</strong> (<em>str</em>) – Time range, end from.</p></li>
+<li><p><strong>time_serie_name</strong> (<em>str</em>) – Time_serie column name in the table.</p></li>
+<li><p><strong>ground_truth</strong> (<em>numpy array of shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Ground truth value, for evaluation and visualization.</p></li>
+<li><p><strong>time_serie</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether contains time stamps as one of the features or not.</p></li>
+<li><p><strong>ground_truth_flag</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – Whether uses ground truth to evaluate the performance or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>X</strong> – Queried data as DataFrame from given table and time range.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.standardizer">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">standardizer</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">X_t=None</em>, <em class="sig-param">keep_scalar=False</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.standardizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conduct Z-normalization on data to turn input samples become zero-mean
+and unit variance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The training samples</p></li>
+<li><p><strong>X_t</strong> (<em>numpy array of shape</em><em> (</em><em>n_samples_new</em><em>, </em><em>n_features</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The data to be converted</p></li>
+<li><p><strong>keep_scalar</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – The flag to indicate whether to return the scalar</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_norm</strong> (<em>numpy array of shape (n_samples, n_features)</em>) – X after the Z-score normalization</p></li>
+<li><p><strong>X_t_norm</strong> (<em>numpy array of shape (n_samples, n_features)</em>) – X_t after the Z-score normalization</p></li>
+<li><p><strong>scalar</strong> (<em>sklearn scalar object</em>) – The scalar used in conversion</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.utilities.str2bool">
+<code class="sig-prename descclassname">utils.utilities.</code><code class="sig-name descname">str2bool</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="headerlink" href="#utils.utilities.str2bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert string to bool variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>str</em>) – String needs to be convert. ‘yes’, ‘true’, ‘t’, ‘y’, ‘1’; or ‘no’, ‘false’, ‘f’, ‘n’, ‘0’.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-utils">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h2>

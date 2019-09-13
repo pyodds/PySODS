@@ -88,7 +88,7 @@
 <li><a class="reference internal" href="#module-algo.base">algo.base module</a></li>
 <li><a class="reference internal" href="#module-algo.cblof">algo.cblof module</a></li>
 <li><a class="reference internal" href="#module-algo.dagmm">algo.dagmm module</a></li>
-<li><a class="reference internal" href="#algo-hbos-module">algo.hbos module</a></li>
+<li><a class="reference internal" href="#module-algo.hbos">algo.hbos module</a></li>
 <li><a class="reference internal" href="#module-algo.iforest">algo.iforest module</a></li>
 <li><a class="reference internal" href="#module-algo.knn">algo.knn module</a></li>
 <li><a class="reference internal" href="#module-algo.lof">algo.lof module</a></li>
@@ -96,9 +96,9 @@
 <li><a class="reference internal" href="#module-algo.lstmencdec">algo.lstmencdec module</a></li>
 <li><a class="reference internal" href="#module-algo.luminolFunc">algo.luminolFunc module</a></li>
 <li><a class="reference internal" href="#module-algo.ocsvm">algo.ocsvm module</a></li>
-<li><a class="reference internal" href="#algo-pca-module">algo.pca module</a></li>
+<li><a class="reference internal" href="#module-algo.pca">algo.pca module</a></li>
 <li><a class="reference internal" href="#module-algo.robustcovariance">algo.robustcovariance module</a></li>
-<li><a class="reference internal" href="#algo-sod-module">algo.sod module</a></li>
+<li><a class="reference internal" href="#module-algo.sod">algo.sod module</a></li>
 <li><a class="reference internal" href="#module-algo.staticautoencoder">algo.staticautoencoder module</a></li>
 <li><a class="reference internal" href="#module-algo">Module contents</a></li>
 </ul>
@@ -247,7 +247,7 @@ It could be used to detect outlying objects in the data by calculating the recon
 </dl>
 <dl class="method">
 <dt id="algo.autoencoder.AUTOENCODER.decision_function">
-<code class="sig-name descname">decision_function</code><span class="sig-paren">(</span><em class="sig-param">X: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; numpy.core.multiarray.array<a class="headerlink" href="#algo.autoencoder.AUTOENCODER.decision_function" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">decision_function</code><span class="sig-paren">(</span><em class="sig-param">X: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; numpy.array<a class="headerlink" href="#algo.autoencoder.AUTOENCODER.decision_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict raw anomaly score of X using the fitted detector.
 The anomaly score of an input sample is computed based on different
 detector algorithms. For consistency, outliers are assigned with
@@ -638,14 +638,180 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="algo-hbos-module">
-<h2>algo.hbos module<a class="headerlink" href="#algo-hbos-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-algo.hbos">
+<span id="algo-hbos-module"></span><h2>algo.hbos module<a class="headerlink" href="#module-algo.hbos" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="algo.hbos.HBOS">
+<em class="property">class </em><code class="sig-prename descclassname">algo.hbos.</code><code class="sig-name descname">HBOS</code><span class="sig-paren">(</span><em class="sig-param">n_bins=10</em>, <em class="sig-param">alpha=0.1</em>, <em class="sig-param">tol=0.5</em>, <em class="sig-param">contamination=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.hbos.HBOS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
+<p>Histogram- based outlier detection (HBOS) is an efficient unsupervised
+method. It assumes the feature independence and calculates the degree
+of outlyingness by building histograms. See <a href="#id13"><span class="problematic" id="id14">:cite:`goldstein2012histogram`</span></a>
+for details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_bins</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=10</em><em>)</em>) – The number of bins.</p></li>
+<li><p><strong>alpha</strong> (<em>float in</em><em> (</em><em>0</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The regularizer for preventing overflow.</p></li>
+<li><p><strong>tol</strong> (<em>float in</em><em> (</em><em>0</em><em>, </em><em>1</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The parameter to decide the flexibility while dealing
+the samples falling outside the bins.</p></li>
+<li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The amount of contamination of the data set,
+i.e. the proportion of outliers in the data set. Used when fitting to
+define the threshold on the decision function.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="algo.hbos.HBOS.bin_edges_">
+<code class="sig-name descname">bin_edges_</code><a class="headerlink" href="#algo.hbos.HBOS.bin_edges_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The edges of the bins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_bins + 1, n_features )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.hbos.HBOS.hist_">
+<code class="sig-name descname">hist_</code><a class="headerlink" href="#algo.hbos.HBOS.hist_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The density of each histogram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_bins, n_features)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.hbos.HBOS.decision_scores_">
+<code class="sig-name descname">decision_scores_</code><a class="headerlink" href="#algo.hbos.HBOS.decision_scores_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The outlier scores of the training data.
+The higher, the more abnormal. Outliers tend to have higher
+scores. This value is available once the detector is fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.hbos.HBOS.threshold_">
+<code class="sig-name descname">threshold_</code><a class="headerlink" href="#algo.hbos.HBOS.threshold_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The threshold is based on <code class="docutils literal notranslate"><span class="pre">contamination</span></code>. It is the
+<code class="docutils literal notranslate"><span class="pre">n_samples</span> <span class="pre">*</span> <span class="pre">contamination</span></code> most abnormal samples in
+<code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>. The threshold is calculated for generating
+binary outlier labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.hbos.HBOS.labels_">
+<code class="sig-name descname">labels_</code><a class="headerlink" href="#algo.hbos.HBOS.labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The binary labels of the training data. 0 stands for inliers
+and 1 for outliers/anomalies. It is generated by applying
+<code class="docutils literal notranslate"><span class="pre">threshold_</span></code> on <code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, either 0 or 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.hbos.HBOS.decision_function">
+<code class="sig-name descname">decision_function</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.hbos.HBOS.decision_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict raw anomaly score of X using the fitted detector.</p>
+<p>The anomaly score of an input sample is computed based on different
+detector algorithms. For consistency, outliers are assigned with
+larger anomaly scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dataframe of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The training input samples. Sparse matrices are accepted only
+if they are supported by the base estimator.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>anomaly_scores</strong> – The anomaly score of the input samples.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.hbos.HBOS.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.hbos.HBOS.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit detector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dataframe of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The input samples.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.hbos.HBOS.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.hbos.HBOS.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id15"><span class="problematic" id="id16">`</span></a>decision_function(X)’,
+and the threshold <a href="#id17"><span class="problematic" id="id18">`</span></a>contamination’.
+:param X: The input samples.
+:type X: dataframe of shape (n_samples, n_features)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ranking</strong> – The outlierness of the input samples.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="algo.hbos.invert_order">
+<code class="sig-prename descclassname">algo.hbos.</code><code class="sig-name descname">invert_order</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">method='multiplication'</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.hbos.invert_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert the order of a list of values. The smallest value becomes
+the largest in the inverted list. This is useful while combining
+multiple detectors since their score order could be different.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scores</strong> (<em>list</em><em>, </em><em>array</em><em> or </em><em>numpy array with shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – The list of values to be inverted</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em><em> (</em><em>default='multiplication'</em><em>)</em>) – Methods used for order inversion. Valid methods are:
+- ‘multiplication’: multiply by -1
+- ‘subtraction’: max(scores) - scores</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>inverted_scores</strong> – The inverted list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scores1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invert_order</span><span class="p">(</span><span class="n">scores1</span><span class="p">)</span>
+<span class="go">array([-0.1, -0.3, -0.5, -0.7, -0.2, -0.1])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invert_order</span><span class="p">(</span><span class="n">scores1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;subtraction&#39;</span><span class="p">)</span>
+<span class="go">array([ 0.6,  0.4,  0.2,  0. ,  0.5,  0.6])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 <div class="section" id="module-algo.iforest">
 <span id="algo-iforest-module"></span><h2>algo.iforest module<a class="headerlink" href="#module-algo.iforest" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="algo.iforest.IFOREST">
-<em class="property">class </em><code class="sig-prename descclassname">algo.iforest.</code><code class="sig-name descname">IFOREST</code><span class="sig-paren">(</span><em class="sig-param">n_estimators=100</em>, <em class="sig-param">max_samples='auto'</em>, <em class="sig-param">contamination=0.1</em>, <em class="sig-param">max_features=1.0</em>, <em class="sig-param">bootstrap=False</em>, <em class="sig-param">n_jobs=1</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.iforest.IFOREST" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">algo.iforest.</code><code class="sig-name descname">IFOREST</code><span class="sig-paren">(</span><em class="sig-param">n_estimators=100</em>, <em class="sig-param">max_samples='auto'</em>, <em class="sig-param">contamination='legacy'</em>, <em class="sig-param">max_features=1.0</em>, <em class="sig-param">bootstrap=False</em>, <em class="sig-param">n_jobs=None</em>, <em class="sig-param">behaviour='old'</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">warm_start=False</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.iforest.IFOREST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble.iforest.IsolationForest</span></code>, <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
 <p>Isolation Forest Algorithm
 Return the anomaly score of each sample using the IsolationForest algorithm
@@ -659,15 +825,13 @@ This path length, averaged over a forest of such random trees, is a
 measure of normality and our decision function.
 Random partitioning produces noticeably shorter paths for anomalies.
 Hence, when a forest of random trees collectively produce shorter path
-lengths for particular samples, they are highly likely to be anomalies.
-Read more in the <span class="xref std std-ref">User Guide</span>.
-.. versionadded:: 0.18
-:param n_estimators: The number of base estimators in the ensemble.
-:type n_estimators: int, optional (default=100)
-:param max_samples:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>The number of samples to draw from X to train each base estimator.</dt><dd><ul class="simple">
+lengths for particular samples, they are highly likely to be anomalies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_estimators</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=100</em><em>)</em>) – The number of base estimators in the ensemble.</p></li>
+<li><p><strong>max_samples</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em><em> (</em><em>default=&quot;auto&quot;</em><em>)</em>) – <dl class="simple">
+<dt>The number of samples to draw from X to train each base estimator.</dt><dd><ul>
 <li><p>If int, then draw <cite>max_samples</cite> samples.</p></li>
 <li><p>If float, then draw <cite>max_samples * X.shape[0]</cite> samples.</p></li>
 <li><p>If “auto”, then <cite>max_samples=min(256, n_samples)</cite>.</p></li>
@@ -676,10 +840,7 @@ Read more in the <span class="xref std std-ref">User Guide</span>.
 </dl>
 <p>If max_samples is larger than the number of samples provided,
 all samples will be used for all trees (no sampling).</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+</p></li>
 <li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – <p>The amount of contamination of the data set, i.e. the proportion
 of outliers in the data set. Used when fitting to define the threshold
 on the decision function. If ‘auto’, the decision function threshold is
@@ -800,11 +961,11 @@ maximum depth of each tree is set to <code class="docutils literal notranslate">
 (see (Liu et al., 2008) for more details).</p>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dt class="label" id="id19"><span class="brackets">1</span></dt>
 <dd><p>Liu, Fei Tony, Ting, Kai Ming and Zhou, Zhi-Hua. “Isolation forest.”
-Data Mining, 2008. ICDM‘08. Eighth IEEE International Conference on.</p>
+Data Mining, 2008. ICDM’08. Eighth IEEE International Conference on.</p>
 </dd>
-<dt class="label" id="id14"><span class="brackets">2</span></dt>
+<dt class="label" id="id20"><span class="brackets">2</span></dt>
 <dd><p>Liu, Fei Tony, Ting, Kai Ming and Zhou, Zhi-Hua. “Isolation-based
 anomaly detection.” ACM Transactions on Knowledge Discovery from
 Data (TKDD) 6.1 (2012): 3.</p>
@@ -822,7 +983,7 @@ Data (TKDD) 6.1 (2012): 3.</p>
 <p>kNN class for outlier detection.
 For an observation, its distance to its kth nearest neighbor could be
 viewed as the outlying score. It could be viewed as a way to measure
-the density. See <a href="#id15"><span class="problematic" id="id16">:cite:`ramaswamy2000efficient,angiulli2002fast`</span></a> for
+the density. See <a href="#id21"><span class="problematic" id="id22">:cite:`ramaswamy2000efficient,angiulli2002fast`</span></a> for
 details.</p>
 <p>Three kNN detectors are supported:
 largest: use the distance to the kth neighbor as the outlier score
@@ -969,8 +1130,8 @@ if they are supported by the base estimator.</p>
 <dl class="method">
 <dt id="algo.knn.KNN.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.knn.KNN.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id17"><span class="problematic" id="id18">`</span></a>decision_function(X)’,
-and the threshold <a href="#id19"><span class="problematic" id="id20">`</span></a>contamination’.
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id23"><span class="problematic" id="id24">`</span></a>decision_function(X)’,
+and the threshold <a href="#id25"><span class="problematic" id="id26">`</span></a>contamination’.
 :param X: The input samples.
 :type X: dataframe of shape (n_samples, n_features)</p>
 <dl class="field-list simple">
@@ -990,7 +1151,7 @@ and the threshold <a href="#id19"><span class="problematic" id="id20">`</span></
 <span id="algo-lof-module"></span><h2>algo.lof module<a class="headerlink" href="#module-algo.lof" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="algo.lof.LOF">
-<em class="property">class </em><code class="sig-prename descclassname">algo.lof.</code><code class="sig-name descname">LOF</code><span class="sig-paren">(</span><em class="sig-param">n_neighbors=20</em>, <em class="sig-param">algorithm='auto'</em>, <em class="sig-param">leaf_size=30</em>, <em class="sig-param">metric='minkowski'</em>, <em class="sig-param">p=2</em>, <em class="sig-param">metric_params=None</em>, <em class="sig-param">contamination=0.1</em>, <em class="sig-param">n_jobs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.lof.LOF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">algo.lof.</code><code class="sig-name descname">LOF</code><span class="sig-paren">(</span><em class="sig-param">n_neighbors=20</em>, <em class="sig-param">algorithm='auto'</em>, <em class="sig-param">leaf_size=30</em>, <em class="sig-param">metric='minkowski'</em>, <em class="sig-param">p=2</em>, <em class="sig-param">metric_params=None</em>, <em class="sig-param">contamination='legacy'</em>, <em class="sig-param">novelty=False</em>, <em class="sig-param">n_jobs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.lof.LOF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.neighbors.lof.LocalOutlierFactor</span></code>, <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
 <p>Unsupervised Outlier Detection using Local Outlier Factor (LOF)
 The anomaly score of each sample is called Local Outlier Factor.
@@ -1002,15 +1163,13 @@ More precisely, locality is given by k-nearest neighbors, whose distance
 is used to estimate the local density.
 By comparing the local density of a sample to the local densities of
 its neighbors, one can identify samples that have a substantially lower
-density than their neighbors. These are considered outliers.
-:param n_neighbors: Number of neighbors to use by default for <code class="xref py py-meth docutils literal notranslate"><span class="pre">kneighbors()</span></code> queries.</p>
-<blockquote>
-<div><p>If n_neighbors is larger than the number of samples provided,
-all samples will be used.</p>
-</div></blockquote>
+density than their neighbors. These are considered outliers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>n_neighbors</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=20</em><em>)</em>) – Number of neighbors to use by default for <code class="xref py py-meth docutils literal notranslate"><span class="pre">kneighbors()</span></code> queries.
+If n_neighbors is larger than the number of samples provided,
+all samples will be used.</p></li>
 <li><p><strong>algorithm</strong> (<em>{'auto'</em><em>, </em><em>'ball_tree'</em><em>, </em><em>'kd_tree'</em><em>, </em><em>'brute'}</em><em>, </em><em>optional</em>) – <p>Algorithm used to compute the nearest neighbors:
 - ‘ball_tree’ will use <code class="xref py py-class docutils literal notranslate"><span class="pre">BallTree</span></code>
 - ‘kd_tree’ will use <code class="xref py py-class docutils literal notranslate"><span class="pre">KDTree</span></code>
@@ -1035,12 +1194,9 @@ pair of instances (rows) and the resulting value recorded. The callable
 should take two arrays as input and return one value indicating the
 distance between them. This works for Scipy’s metrics, but is less
 efficient than passing the metric name as a string.
-Valid values for metric are:
-- from scikit-learn: [‘cityblock’, ‘cosine’, ‘euclidean’, ‘l1’, ‘l2’,</p>
-<blockquote>
-<div><p>’manhattan’]</p>
-</div></blockquote>
+Valid values for metric are:</p>
 <ul>
+<li><p>from scikit-learn: [‘cityblock’, ‘cosine’, ‘euclidean’, ‘l1’, ‘l2’, ‘manhattan’]</p></li>
 <li><p>from scipy.spatial.distance: [‘braycurtis’, ‘canberra’, ‘chebyshev’,
 ‘correlation’, ‘dice’, ‘hamming’, ‘jaccard’, ‘kulsinski’,
 ‘mahalanobis’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’,
@@ -1126,7 +1282,7 @@ number of outliers in training.</p>
 
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id21"><span class="brackets">1</span></dt>
+<dt class="label" id="id27"><span class="brackets">1</span></dt>
 <dd><p>Breunig, M. M., Kriegel, H. P., Ng, R. T., &amp; Sander, J. (2000, May).
 LOF: identifying density-based local outliers. In ACM sigmod record.</p>
 </dd>
@@ -1194,8 +1350,8 @@ if they are supported by the base estimator.</p>
 <dl class="method">
 <dt id="algo.lstmad.LSTMAD.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.lstmad.LSTMAD.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id22"><span class="problematic" id="id23">`</span></a>decision_function(X)’,
-and the threshold <a href="#id24"><span class="problematic" id="id25">`</span></a>contamination’.
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id28"><span class="problematic" id="id29">`</span></a>decision_function(X)’,
+and the threshold <a href="#id30"><span class="problematic" id="id31">`</span></a>contamination’.
 :param X: The input samples.
 :type X: dataframe of shape (n_samples, n_features)</p>
 <dl class="field-list simple">
@@ -1289,8 +1445,8 @@ if they are supported by the base estimator.</p>
 <dl class="method">
 <dt id="algo.lstmencdec.LSTMED.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.lstmencdec.LSTMED.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id26"><span class="problematic" id="id27">`</span></a>decision_function(X)’,
-and the threshold <a href="#id28"><span class="problematic" id="id29">`</span></a>contamination’.
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id32"><span class="problematic" id="id33">`</span></a>decision_function(X)’,
+and the threshold <a href="#id34"><span class="problematic" id="id35">`</span></a>contamination’.
 :param X: The input samples.
 :type X: dataframe of shape (n_samples, n_features)</p>
 <dl class="field-list simple">
@@ -1375,8 +1531,8 @@ if they are supported by the base estimator.</p>
 <dl class="method">
 <dt id="algo.luminolFunc.luminolDet.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">ts</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.luminolFunc.luminolDet.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id30"><span class="problematic" id="id31">`</span></a>decision_function(X)’,
-and the threshold <a href="#id32"><span class="problematic" id="id33">`</span></a>contamination’.
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id36"><span class="problematic" id="id37">`</span></a>decision_function(X)’,
+and the threshold <a href="#id38"><span class="problematic" id="id39">`</span></a>contamination’.
 :param X: The input samples.
 :type X: dataframe of shape (n_samples, n_features)</p>
 <dl class="field-list simple">
@@ -1396,7 +1552,7 @@ and the threshold <a href="#id32"><span class="problematic" id="id33">`</span></
 <span id="algo-ocsvm-module"></span><h2>algo.ocsvm module<a class="headerlink" href="#module-algo.ocsvm" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="algo.ocsvm.OCSVM">
-<em class="property">class </em><code class="sig-prename descclassname">algo.ocsvm.</code><code class="sig-name descname">OCSVM</code><span class="sig-paren">(</span><em class="sig-param">kernel='rbf'</em>, <em class="sig-param">degree=3</em>, <em class="sig-param">gamma='auto'</em>, <em class="sig-param">coef0=0.0</em>, <em class="sig-param">tol=0.001</em>, <em class="sig-param">nu=0.5</em>, <em class="sig-param">shrinking=True</em>, <em class="sig-param">cache_size=200</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">max_iter=-1</em>, <em class="sig-param">random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.ocsvm.OCSVM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">algo.ocsvm.</code><code class="sig-name descname">OCSVM</code><span class="sig-paren">(</span><em class="sig-param">kernel='rbf'</em>, <em class="sig-param">degree=3</em>, <em class="sig-param">gamma='auto_deprecated'</em>, <em class="sig-param">coef0=0.0</em>, <em class="sig-param">tol=0.001</em>, <em class="sig-param">nu=0.5</em>, <em class="sig-param">shrinking=True</em>, <em class="sig-param">cache_size=200</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">max_iter=-1</em>, <em class="sig-param">random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.ocsvm.OCSVM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.svm.classes.OneClassSVM</span></code>, <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
 <p>Unsupervised Outlier Detection.
 Estimate the support of a high-dimensional distribution.
@@ -1529,33 +1685,350 @@ consistency with other outlier detection algorithms.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="algo-pca-module">
-<h2>algo.pca module<a class="headerlink" href="#algo-pca-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-algo.pca">
+<span id="algo-pca-module"></span><h2>algo.pca module<a class="headerlink" href="#module-algo.pca" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="algo.pca.PCA">
+<em class="property">class </em><code class="sig-prename descclassname">algo.pca.</code><code class="sig-name descname">PCA</code><span class="sig-paren">(</span><em class="sig-param">n_components=None</em>, <em class="sig-param">n_selected_components=None</em>, <em class="sig-param">contamination=0.1</em>, <em class="sig-param">copy=True</em>, <em class="sig-param">whiten=False</em>, <em class="sig-param">svd_solver='auto'</em>, <em class="sig-param">tol=0.0</em>, <em class="sig-param">iterated_power='auto'</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">weighted=True</em>, <em class="sig-param">standardization=True</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.pca.PCA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
+<p>Principal component analysis (PCA) can be used in detecting outliers. PCA
+is a linear dimensionality reduction using Singular Value Decomposition
+of the data to project it to a lower dimensional space.</p>
+<p>In this procedure, covariance matrix of the data can be decomposed to
+orthogonal vectors, called eigenvectors, associated with eigenvalues. The
+eigenvectors with high eigenvalues capture most of the variance in the
+data.</p>
+<p>Therefore, a low dimensional hyperplane constructed by k eigenvectors can
+capture most of the variance in the data. However, outliers are different
+from normal data points, which is more obvious on the hyperplane
+constructed by the eigenvectors with small eigenvalues.</p>
+<p>Therefore, outlier scores can be obtained as the sum of the projected
+distance of a sample on all eigenvectors.
+See <a href="#id40"><span class="problematic" id="id41">:cite:`shyu2003novel,aggarwal2015outlier`</span></a> for details.</p>
+<p>Score(X) = Sum of weighted euclidean distance between each sample to the
+hyperplane constructed by the selected eigenvectors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>None</em><em> or </em><em>string</em>) – <p>Number of components to keep.
+if n_components is not set all components are kept:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n_components</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>if n_components == ‘mle’ and svd_solver == ‘full’, Minka’s MLE is used
+to guess the dimension
+if <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">n_components</span> <span class="pre">&lt;</span> <span class="pre">1</span></code> and svd_solver == ‘full’, select the number
+of components such that the amount of variance that needs to be
+explained is greater than the percentage specified by n_components
+n_components cannot be equal to n_features for svd_solver == ‘arpack’.</p>
+</p></li>
+<li><p><strong>n_selected_components</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – Number of selected principal components
+for calculating the outlier scores. It is not necessarily equal to
+the total number of the principal components. If not set, use
+all principal components.</p></li>
+<li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The amount of contamination of the data set, i.e.
+the proportion of outliers in the data set. Used when fitting to
+define the threshold on the decision function.</p></li>
+<li><p><strong>copy</strong> (<em>bool</em><em> (</em><em>default True</em><em>)</em>) – If False, data passed to fit are overwritten and running
+fit(X).transform(X) will not yield the expected results,
+use fit_transform(X) instead.</p></li>
+<li><p><strong>whiten</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default False</em><em>)</em>) – <p>When True (False by default) the <cite>components_</cite> vectors are multiplied
+by the square root of n_samples and then divided by the singular values
+to ensure uncorrelated outputs with unit component-wise variances.</p>
+<p>Whitening will remove some information from the transformed signal
+(the relative variance scales of the components) but can sometime
+improve the predictive accuracy of the downstream estimators by
+making their data respect some hard-wired assumptions.</p>
+</p></li>
+<li><p><strong>svd_solver</strong> (<em>string {'auto'</em><em>, </em><em>'full'</em><em>, </em><em>'arpack'</em><em>, </em><em>'randomized'}</em>) – <dl class="simple">
+<dt>auto :</dt><dd><p>the solver is selected by a default policy based on <cite>X.shape</cite> and
+<cite>n_components</cite>: if the input data is larger than 500x500 and the
+number of components to extract is lower than 80% of the smallest
+dimension of the data, then the more efficient ‘randomized’
+method is enabled. Otherwise the exact full SVD is computed and
+optionally truncated afterwards.</p>
+</dd>
+<dt>full :</dt><dd><p>run exact full SVD calling the standard LAPACK solver via
+<cite>scipy.linalg.svd</cite> and select the components by postprocessing</p>
+</dd>
+<dt>arpack :</dt><dd><p>run SVD truncated to n_components calling ARPACK solver via
+<cite>scipy.sparse.linalg.svds</cite>. It requires strictly
+0 &lt; n_components &lt; X.shape[1]</p>
+</dd>
+<dt>randomized :</dt><dd><p>run randomized SVD by the method of Halko et al.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>tol</strong> (<em>float &gt;= 0</em><em>, </em><em>optional</em><em> (</em><em>default .0</em><em>)</em>) – Tolerance for singular values computed by svd_solver == ‘arpack’.</p></li>
+<li><p><strong>iterated_power</strong> (<em>int &gt;= 0</em><em>, or </em><em>'auto'</em><em>, </em><em>(</em><em>default 'auto'</em><em>)</em>) – Number of iterations for the power method computed by
+svd_solver == ‘randomized’.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default None</em><em>)</em>) – If int, random_state is the seed used by the random number generator;
+If RandomState instance, random_state is the random number generator;
+If None, the random number generator is the RandomState instance used
+by <cite>np.random</cite>. Used when <code class="docutils literal notranslate"><span class="pre">svd_solver</span></code> == ‘arpack’ or ‘randomized’.</p></li>
+<li><p><strong>weighted</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=True</em><em>)</em>) – If True, the eigenvalues are used in score computation.
+The eigenvectors with small eigenvalues comes with more importance
+in outlier score calculation.</p></li>
+<li><p><strong>standardization</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default=True</em><em>)</em>) – If True, perform standardization first to convert
+data to zero mean and unit variance.
+See <a class="reference external" href="http://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html">http://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="algo.pca.PCA.components_">
+<code class="sig-name descname">components_</code><a class="headerlink" href="#algo.pca.PCA.components_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Principal axes in feature space, representing the directions of
+maximum variance in the data. The components are sorted by
+<code class="docutils literal notranslate"><span class="pre">explained_variance_</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array, shape (n_components, n_features)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.explained_variance_">
+<code class="sig-name descname">explained_variance_</code><a class="headerlink" href="#algo.pca.PCA.explained_variance_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of variance explained by each of the selected components.</p>
+<p>Equal to n_components largest eigenvalues
+of the covariance matrix of X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array, shape (n_components,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.explained_variance_ratio_">
+<code class="sig-name descname">explained_variance_ratio_</code><a class="headerlink" href="#algo.pca.PCA.explained_variance_ratio_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Percentage of variance explained by each of the selected components.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">n_components</span></code> is not set then all components are stored and the
+sum of explained variances is equal to 1.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array, shape (n_components,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.singular_values_">
+<code class="sig-name descname">singular_values_</code><a class="headerlink" href="#algo.pca.PCA.singular_values_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The singular values corresponding to each of the selected components.
+The singular values are equal to the 2-norms of the <code class="docutils literal notranslate"><span class="pre">n_components</span></code>
+variables in the lower-dimensional space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array, shape (n_components,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.mean_">
+<code class="sig-name descname">mean_</code><a class="headerlink" href="#algo.pca.PCA.mean_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Per-feature empirical mean, estimated from the training set.</p>
+<p>Equal to <cite>X.mean(axis=0)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array, shape (n_features,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.n_components_">
+<code class="sig-name descname">n_components_</code><a class="headerlink" href="#algo.pca.PCA.n_components_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The estimated number of components. When n_components is set
+to ‘mle’ or a number between 0 and 1 (with svd_solver == ‘full’) this
+number is estimated from input data. Otherwise it equals the parameter
+n_components, or n_features if n_components is None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.noise_variance_">
+<code class="sig-name descname">noise_variance_</code><a class="headerlink" href="#algo.pca.PCA.noise_variance_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The estimated noise covariance following the Probabilistic PCA model
+from Tipping and Bishop 1999. See “Pattern Recognition and
+Machine Learning” by C. Bishop, 12.2.1 p. 574 or
+<a class="reference external" href="http://www.miketipping.com/papers/met-mppca.pdf">http://www.miketipping.com/papers/met-mppca.pdf</a>. It is required to
+computed the estimated data covariance and score samples.</p>
+<p>Equal to the average of (min(n_features, n_samples) - n_components)
+smallest eigenvalues of the covariance matrix of X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.decision_scores_">
+<code class="sig-name descname">decision_scores_</code><a class="headerlink" href="#algo.pca.PCA.decision_scores_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The outlier scores of the training data.
+The higher, the more abnormal. Outliers tend to have higher
+scores. This value is available once the detector is fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.threshold_">
+<code class="sig-name descname">threshold_</code><a class="headerlink" href="#algo.pca.PCA.threshold_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The threshold is based on <code class="docutils literal notranslate"><span class="pre">contamination</span></code>. It is the
+<code class="docutils literal notranslate"><span class="pre">n_samples</span> <span class="pre">*</span> <span class="pre">contamination</span></code> most abnormal samples in
+<code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>. The threshold is calculated for generating
+binary outlier labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.pca.PCA.labels_">
+<code class="sig-name descname">labels_</code><a class="headerlink" href="#algo.pca.PCA.labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The binary labels of the training data. 0 stands for inliers
+and 1 for outliers/anomalies. It is generated by applying
+<code class="docutils literal notranslate"><span class="pre">threshold_</span></code> on <code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, either 0 or 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.pca.PCA.decision_function">
+<code class="sig-name descname">decision_function</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.pca.PCA.decision_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict raw anomaly score of X using the fitted detector.</p>
+<p>The anomaly score of an input sample is computed based on different
+detector algorithms. For consistency, outliers are assigned with
+larger anomaly scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dataframe of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The training input samples. Sparse matrices are accepted only
+if they are supported by the base estimator.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>anomaly_scores</strong> – The anomaly score of the input samples.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">explained_variance_</code></dt>
+<dd><p>The amount of variance explained by each of the selected components.</p>
+<p>Equal to n_components largest eigenvalues
+of the covariance matrix of X.</p>
+<p>Decorator for scikit-learn PCA attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">explained_variance_ratio_</code></dt>
+<dd><p>Percentage of variance explained by each of the selected components.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">n_components</span></code> is not set then all components are stored and the
+sum of explained variances is equal to 1.0.</p>
+<p>Decorator for scikit-learn PCA attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.pca.PCA.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.pca.PCA.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit detector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dataframe of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The input samples.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">mean_</code></dt>
+<dd><p>Per-feature empirical mean, estimated from the training set.</p>
+<p>Decorator for scikit-learn PCA attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">noise_variance_</code></dt>
+<dd><p>The estimated noise covariance following the Probabilistic PCA model
+from Tipping and Bishop 1999. See “Pattern Recognition and
+Machine Learning” by C. Bishop, 12.2.1 p. 574 or
+<a class="reference external" href="http://www.miketipping.com/papers/met-mppca.pdf">http://www.miketipping.com/papers/met-mppca.pdf</a>. It is required to
+computed the estimated data covariance and score samples.</p>
+<p>Equal to the average of (min(n_features, n_samples) - n_components)
+smallest eigenvalues of the covariance matrix of X.</p>
+<p>Decorator for scikit-learn PCA attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.pca.PCA.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.pca.PCA.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id42"><span class="problematic" id="id43">`</span></a>decision_function(X)’,
+and the threshold <a href="#id44"><span class="problematic" id="id45">`</span></a>contamination’.
+:param X: The input samples.
+:type X: dataframe of shape (n_samples, n_features)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ranking</strong> – The outlierness of the input samples.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">singular_values_</code></dt>
+<dd><p>The singular values corresponding to each of the selected
+components. The singular values are equal to the 2-norms of the
+<code class="docutils literal notranslate"><span class="pre">n_components</span></code> variables in the lower-dimensional space.</p>
+<p>Decorator for scikit-learn PCA attributes.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-algo.robustcovariance">
 <span id="algo-robustcovariance-module"></span><h2>algo.robustcovariance module<a class="headerlink" href="#module-algo.robustcovariance" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="algo.robustcovariance.RCOV">
 <em class="property">class </em><code class="sig-prename descclassname">algo.robustcovariance.</code><code class="sig-name descname">RCOV</code><span class="sig-paren">(</span><em class="sig-param">store_precision=True</em>, <em class="sig-param">assume_centered=False</em>, <em class="sig-param">support_fraction=None</em>, <em class="sig-param">contamination=0.1</em>, <em class="sig-param">random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.robustcovariance.RCOV" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.covariance.outlier_detection.EllipticEnvelope</span></code>, <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.covariance.elliptic_envelope.EllipticEnvelope</span></code>, <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
 <blockquote>
-<div><p>“”“An object for detecting outliers in a Gaussian distributed dataset.</p>
-</div></blockquote>
-<p>Read more in the <span class="xref std std-ref">User Guide</span>.
-:param store_precision: Specify if the estimated precision is stored.
-:type store_precision: boolean, optional (default=True)
-:param assume_centered: If True, the support of robust location and covariance estimates</p>
-<blockquote>
-<div><p>is computed, and a covariance estimate is recomputed from it,
-without centering the data.
-Useful to work with data whose mean is significantly equal to
-zero but is not exactly zero.
-If False, the robust location and covariance are directly computed
-with the FastMCD algorithm without additional treatment.</p>
+<div><p>An object for detecting outliers in a Gaussian distributed dataset.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>store_precision</strong> (<em>boolean</em><em>, </em><em>optional</em><em> (</em><em>default=True</em><em>)</em>) – Specify if the estimated precision is stored.</p></li>
+<li><p><strong>assume_centered</strong> (<em>boolean</em><em>, </em><em>optional</em><em> (</em><em>default=False</em><em>)</em>) – If True, the support of robust location and covariance estimates
+is computed, and a covariance estimate is recomputed from it,
+without centering the data.
+Useful to work with data whose mean is significantly equal to
+zero but is not exactly zero.
+If False, the robust location and covariance are directly computed
+with the FastMCD algorithm without additional treatment.</p></li>
 <li><p><strong>support_fraction</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>1.</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=None</em><em>)</em>) – The proportion of points to be included in the support of the raw
 MCD estimate. If None, the minimum value of support_fraction will
 be used within the algorithm: <cite>[n_sample + n_features + 1] / 2</cite>.</p></li>
@@ -1660,7 +2133,7 @@ perform well in high-dimensional settings. In particular, one will
 always take care to work with <code class="docutils literal notranslate"><span class="pre">n_samples</span> <span class="pre">&gt;</span> <span class="pre">n_features</span> <span class="pre">**</span> <span class="pre">2</span></code>.</p>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id34"><span class="brackets">1</span></dt>
+<dt class="label" id="id46"><span class="brackets">1</span></dt>
 <dd><p>Rousseeuw, P.J., Van Driessen, K. “A fast algorithm for the
 minimum covariance determinant estimator” Technometrics 41(3), 212
 (1999)</p>
@@ -1669,8 +2142,119 @@ minimum covariance determinant estimator” Technometrics 41(3), 212
 </dd></dl>
 
 </div>
-<div class="section" id="algo-sod-module">
-<h2>algo.sod module<a class="headerlink" href="#algo-sod-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-algo.sod">
+<span id="algo-sod-module"></span><h2>algo.sod module<a class="headerlink" href="#module-algo.sod" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="algo.sod.SOD">
+<em class="property">class </em><code class="sig-prename descclassname">algo.sod.</code><code class="sig-name descname">SOD</code><span class="sig-paren">(</span><em class="sig-param">contamination=0.1</em>, <em class="sig-param">n_neighbors=20</em>, <em class="sig-param">ref_set=10</em>, <em class="sig-param">alpha=0.8</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.sod.SOD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#algo.base.Base" title="algo.base.Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">algo.base.Base</span></code></a></p>
+<p>Subspace outlier detection (SOD) schema aims to detect outlier in
+varying subspaces of a high dimensional feature space. For each data
+object, SOD explores the axis-parallel subspace spanned by the data
+object’s neighbors and determines how much the object deviates from the
+neighbors in this subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_neighbors</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=20</em><em>)</em>) – Number of neighbors to use by default for k neighbors queries.</p></li>
+<li><p><strong>ref_set</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=10</em><em>)</em>) – Specifies the number of shared nearest neighbors to create the reference set. Note that ref_set must be smaller than n_neighbors.</p></li>
+<li><p><strong>alpha</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>1.</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.8</em><em>)</em>) – specifies the lower limit for selecting subspace.
+0.8 is set as default as suggested in the original paper.</p></li>
+<li><p><strong>contamination</strong> (<em>float in</em><em> (</em><em>0.</em><em>, </em><em>0.5</em><em>)</em><em>, </em><em>optional</em><em> (</em><em>default=0.1</em><em>)</em>) – The amount of contamination of the data set, i.e.
+the proportion of outliers in the data set. Used when fitting to
+define the threshold on the decision function.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="algo.sod.SOD.decision_scores_">
+<code class="sig-name descname">decision_scores_</code><a class="headerlink" href="#algo.sod.SOD.decision_scores_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The outlier scores of the training data.
+The higher, the more abnormal. Outliers tend to have higher
+scores. This value is available once the detector is
+fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.sod.SOD.threshold_">
+<code class="sig-name descname">threshold_</code><a class="headerlink" href="#algo.sod.SOD.threshold_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The threshold is based on <code class="docutils literal notranslate"><span class="pre">contamination</span></code>. It is the
+<code class="docutils literal notranslate"><span class="pre">n_samples</span> <span class="pre">*</span> <span class="pre">contamination</span></code> most abnormal samples in
+<code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>. The threshold is calculated for generating
+binary outlier labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="algo.sod.SOD.labels_">
+<code class="sig-name descname">labels_</code><a class="headerlink" href="#algo.sod.SOD.labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>The binary labels of the training data. 0 stands for inliers
+and 1 for outliers/anomalies. It is generated by applying
+<code class="docutils literal notranslate"><span class="pre">threshold_</span></code> on <code class="docutils literal notranslate"><span class="pre">decision_scores_</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, either 0 or 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.sod.SOD.decision_function">
+<code class="sig-name descname">decision_function</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.sod.SOD.decision_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict raw anomaly score of X using the fitted detector.</p>
+<p>The anomaly score of an input sample is computed based on different
+detector algorithms. For consistency, outliers are assigned with
+larger anomaly scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dataframe of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The training input samples. Sparse matrices are accepted only
+if they are supported by the base estimator.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>anomaly_scores</strong> – The anomaly score of the input samples.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.sod.SOD.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.sod.SOD.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit detector.
+:param X: The input samples.
+:type X: dataframe of shape (n_samples, n_features)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="algo.sod.SOD.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.sod.SOD.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id47"><span class="problematic" id="id48">`</span></a>decision_function(X)’,
+and the threshold <a href="#id49"><span class="problematic" id="id50">`</span></a>contamination’.
+:param X: The input samples.
+:type X: dataframe of shape (n_samples, n_features)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ranking</strong> – The outlierness of the input samples.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-algo.staticautoencoder">
 <span id="algo-staticautoencoder-module"></span><h2>algo.staticautoencoder module<a class="headerlink" href="#module-algo.staticautoencoder" title="Permalink to this headline">¶</a></h2>
@@ -1710,8 +2294,8 @@ if they are supported by the base estimator.</p>
 <dl class="method">
 <dt id="algo.staticautoencoder.StaticAutoEncoder.predict">
 <code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#algo.staticautoencoder.StaticAutoEncoder.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id35"><span class="problematic" id="id36">`</span></a>decision_function(X)’,
-and the threshold <a href="#id37"><span class="problematic" id="id38">`</span></a>contamination’.
+<dd><p>Return outliers with -1 and inliers with 1, with the outlierness score calculated from the <a href="#id51"><span class="problematic" id="id52">`</span></a>decision_function(X)’,
+and the threshold <a href="#id53"><span class="problematic" id="id54">`</span></a>contamination’.
 :param X: The input samples.
 :type X: dataframe of shape (n_samples, n_features)</p>
 <dl class="field-list simple">

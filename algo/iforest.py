@@ -17,8 +17,7 @@ class IFOREST(IsolationForest,Base):
     Random partitioning produces noticeably shorter paths for anomalies.
     Hence, when a forest of random trees collectively produce shorter path
     lengths for particular samples, they are highly likely to be anomalies.
-    Read more in the :ref:`User Guide <isolation_forest>`.
-    .. versionadded:: 0.18
+   
     Parameters
     ----------
     n_estimators : int, optional (default=100)

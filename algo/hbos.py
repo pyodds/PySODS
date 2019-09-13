@@ -262,6 +262,7 @@ def invert_order(scores, method='multiplication'):
     """ Invert the order of a list of values. The smallest value becomes
     the largest in the inverted list. This is useful while combining
     multiple detectors since their score order could be different.
+    
     Parameters
     ----------
     scores : list, array or numpy array with shape (n_samples,)
