@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to pysods’s documentation! &mdash; pysods 1.0 documentation</title>
+  <title>SQL-Server Anomaly Detection Service &mdash; pysods 1.0 documentation</title>
   
 
   
@@ -33,7 +33,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="pysods 1.0 documentation" href="#"/> 
+    <link rel="top" title="pysods 1.0 documentation" href="#"/>
+        <link rel="next" title="SQL-Server Anomaly Detection Service" href="introduction.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,12 +80,20 @@
           
             
             
-                <!-- Local TOC -->
-                <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to pysods’s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+                <p class="caption"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">SQL-Server Anomaly Detection Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apicheatsheet.html">APIs Cheatsheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementedalgos.html">Implemented Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#citing-pyod">Citing PyOD</a></li>
 </ul>
-</div>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pysods</a></li>
+</ul>
+
             
           
         </div>
@@ -124,7 +133,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to pysods’s documentation!</li>
+      <li>SQL-Server Anomaly Detection Service</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -141,9 +150,88 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-pysods-s-documentation">
-<h1>Welcome to pysods’s documentation!<a class="headerlink" href="#welcome-to-pysods-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="sql-server-anomaly-detection-service">
+<h1>SQL-Server Anomaly Detection Service<a class="headerlink" href="#sql-server-anomaly-detection-service" title="Permalink to this headline">¶</a></h1>
+<p>SQL Server Anomaly Detection Service is an open source software library
+for anomaly detection service utilizing state-of-the-art machine
+learning techniques. It is developed by DATA lab at Texas A&amp;M
+University. The goal of SQLServerAD is to provide anomaly detection
+services which meets the demands for users in different fields, w/wo
+data science or machine learning background. SQLServerAD gives the
+ability to execute machine learning algorithms in-database without
+moving data outside SQL Server or over the network.</p>
+<p>SQL-Server Anomaly Detection Service is featured for:</p>
+<ul class="simple">
+<li><p><strong>Full Stack Service</strong> which supports operations and maintenances
+from light-weight SQL based database to back-end machine learning
+algorithms and makes the throughput speed faster;</p></li>
+<li><p><strong>State-of-the-art Anomaly Detection Approaches</strong> including
+<strong>Statistical/Machine Learning/Deep Learning</strong> models with unified
+APIs and detailed documentation;</p></li>
+<li><p><strong>Powerful Data Analysis Mechanism</strong> which supports both <strong>static and
+time-series data</strong> analysis with flexible time-slice(sliding-window)
+segmentation.</p></li>
+</ul>
 <div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">SQL-Server Anomaly Detection Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#api-demo">API Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#quick-start">Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#required-dependencies">Required Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="apicheatsheet.html">APIs Cheatsheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementedalgos.html">Implemented Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementedalgos.html#statistical-based-methods">Statistical Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementedalgos.html#deep-learning-based-methods">Deep Learning Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementedalgos.html#time-serie-methods">Time Serie Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#citing-pyod">Citing PyOD</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pysods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="algo.html">algo package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.algorithm_utils">algo.algorithm_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.autoencoder">algo.autoencoder module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.base">algo.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.cblof">algo.cblof module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.dagmm">algo.dagmm module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.hbos">algo.hbos module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.iforest">algo.iforest module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.knn">algo.knn module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.lof">algo.lof module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.lstmad">algo.lstmad module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.lstmencdec">algo.lstmencdec module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.luminolFunc">algo.luminolFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.ocsvm">algo.ocsvm module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.pca">algo.pca module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.robustcovariance">algo.robustcovariance module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.sod">algo.sod module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo.staticautoencoder">algo.staticautoencoder module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="algo.html#module-algo">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#module-utils.importAlgorithm">utils.importAlgorithm module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#module-utils.plotUtils">utils.plotUtils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#module-utils.utilities">utils.utilities module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#module-utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -159,6 +247,13 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction.html" class="btn btn-neutral float-right" title="SQL-Server Anomaly Detection Service" accesskey="n">Next →</a>
+      
+      
+    </div>
   
 
   <hr/>

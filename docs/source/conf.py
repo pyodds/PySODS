@@ -1,4 +1,4 @@
-#nfiguration file for the Sphinx documentation builder.
+#tion file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
@@ -12,7 +12,8 @@
 #
 import os
 import sys
-sys.path.append('/home/liyuening/PG/PySODS')
+sys.path.append('/home/liyuening/PG/pysods')
+sys.path.append(os.path.abspath('../../pysods'))
 
 # -- Project information -----------------------------------------------------
 
@@ -98,3 +99,4 @@ html_theme = 'rtcat_sphinx_theme'
 import sphinx_rtd_theme
 import rtcat_sphinx_theme
 html_theme_path = [rtcat_sphinx_theme.get_html_theme_path()]
+

@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SQL-Server Anomaly Detection Service &mdash; pysods 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="pysods 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Installation" href="installation.html"/>
+        <link rel="prev" title="SQL-Server Anomaly Detection Service" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pysods
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SQL-Server Anomaly Detection Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-demo">API Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#results-are-shown-as">Results are shown as:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apicheatsheet.html">APIs Cheatsheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementedalgos.html">Implemented Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#citing-pyod">Citing PyOD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pysods</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pysods</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>SQL-Server Anomaly Detection Service</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sql-server-anomaly-detection-service">
+<h1>SQL-Server Anomaly Detection Service<a class="headerlink" href="#sql-server-anomaly-detection-service" title="Permalink to this headline">¶</a></h1>
+<p>SQL Server Anomaly Detection Service is an open source software library
+for anomaly detection service utilizing state-of-the-art machine
+learning techniques. It is developed by DATA lab at Texas A&amp;M
+University. The goal of SQLServerAD is to provide anomaly detection
+services which meets the demands for users in different fields, w/wo
+data science or machine learning background. SQLServerAD gives the
+ability to execute machine learning algorithms in-database without
+moving data outside SQL Server or over the network.</p>
+<p>SQL-Server Anomaly Detection Service is featured for:</p>
+<ul class="simple">
+<li><p><strong>Full Stack Service</strong> which supports operations and maintenances
+from light-weight SQL based database to back-end machine learning
+algorithms and makes the throughput speed faster;</p></li>
+<li><p><strong>State-of-the-art Anomaly Detection Approaches</strong> including
+<strong>Statistical/Machine Learning/Deep Learning</strong> models with unified
+APIs and detailed documentation;</p></li>
+<li><p><strong>Powerful Data Analysis Mechanism</strong> which supports both <strong>static and
+time-series data</strong> analysis with flexible time-slice(sliding-window)
+segmentation.</p></li>
+</ul>
+<div class="section" id="api-demo">
+<h2>API Demo<a class="headerlink" href="#api-demo" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>from utils.import_algorithm import algorithm_selection
+from utils.utilities import output_performance,connect_server,query_data
+
+<span class="c1"># connect to the database</span>
+conn,cursor<span class="o">=</span>connect_server<span class="o">(</span>host, user, password<span class="o">)</span>
+
+<span class="c1"># query data from specific time range</span>
+<span class="nv">data</span> <span class="o">=</span> query_data<span class="o">(</span>database_name,table_name,start_time,end_time<span class="o">)</span>
+
+<span class="c1"># train the anomaly detection algorithm</span>
+<span class="nv">clf</span> <span class="o">=</span> algorithm_selection<span class="o">(</span>algorithm_name<span class="o">)</span>
+clf.fit<span class="o">(</span>X_train<span class="o">)</span>
+
+<span class="c1"># get outlier result and scores</span>
+<span class="nv">prediction_result</span> <span class="o">=</span> clf.predict<span class="o">(</span>X_test<span class="o">)</span>
+<span class="nv">outlierness_score</span> <span class="o">=</span> clf.decision_function<span class="o">(</span><span class="nb">test</span><span class="o">)</span>
+
+<span class="c1">#visualize the prediction_result</span>
+visualize_distribution<span class="o">(</span>X_test,prediction_result,outlierness_score<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python main.py --ground_truth --visualize_distribution
+</pre></div>
+</div>
+<div class="section" id="results-are-shown-as">
+<h3>Results are shown as:<a class="headerlink" href="#results-are-shown-as" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>connect to TDengine success
+Load dataset and table
+Loading cost: <span class="m">0</span>.151061 seconds
+Load data successful
+Start processing:
+<span class="m">100</span>%<span class="p">|</span>████████████████████████████████████<span class="p">|</span> <span class="m">10</span>/10 <span class="o">[</span><span class="m">00</span>:00&lt;<span class="m">00</span>:00, <span class="m">14</span>.02it/s<span class="o">]</span>
+<span class="o">==============================</span>
+Results in Algorithm dagmm are:
+accuracy_score: <span class="m">0</span>.98
+precision_score: <span class="m">0</span>.99
+recall_score: <span class="m">0</span>.99
+f1_score: <span class="m">0</span>.99
+processing time: <span class="m">15</span>.330137 seconds
+roc_auc_score: <span class="m">0</span>.99
+<span class="o">==============================</span>
+connection is closed
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next →</a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="SQL-Server Anomaly Detection Service" accesskey="p">← Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Yuening Li.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE: 'true'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
