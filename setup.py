@@ -6,16 +6,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='sqladservice',
+    name='pyodds',
     version='1.0.0a0',
-    description='SQL-Server Anomaly Detection Service',
+    description='An end-to-end anomaly detection system',
     author='Data Analytics at Texas A&M (DATA) Lab, Yuening Li',
     author_email='yuehningli@gmail.com',
     download_url='https://github.com/yli96/PyOutlierDetectionSys/archive/master.zip',
     keywords=['AnomalyDetection', 'SQLServer'],
     install_requires=[
         'tensorflow>=2.0.0b1',
-        'taos',
         'scikit-learn',
         'numpy',
         'luminol',
